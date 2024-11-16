@@ -8,13 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import java.util.concurrent.BlockingQueue
 
 class MainActivity : AppCompatActivity() {
-//    var player1Suits = arrayListOf<Int>()
-//
-//    val player2Suits = arrayListOf<Int>()
-
 
     var cardsOfHeartsP1: Int = 0
     var cardsOfDiamondsP1: Int = 0
@@ -24,8 +19,6 @@ class MainActivity : AppCompatActivity() {
     var cardsOfDiamondsP2: Int = 0
     var cardsOfSpadesP2: Int = 0
     var cardsOfClubsP2: Int = 0
-//    val pullCard = findViewById<Button>(R.id.pullCard)
-//    var pulledCard = findViewById<TextView>(R.id.pulledCard)
     var firstPlayerTurn: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,17 +31,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-//        player1Suits.add(cardsOfClubsP1)
-//        player1Suits.add(cardsOfHeartsP1)
-//        player1Suits.add(cardsOfSpadesP1)
-//        player1Suits.add(cardsOfDiamondsP1)
-//
-//        player2Suits.add(cardsOfClubsP2)
-//        player2Suits.add(cardsOfHeartsP2)
-//        player2Suits.add(cardsOfSpadesP2)
-//        player2Suits.add(cardsOfDiamondsP2)
         val pullCard = findViewById<Button>(R.id.pullCard)
-        var pulledCard = findViewById<TextView>(R.id.pulledCard)
+        var pulledCardp1 = findViewById<TextView>(R.id.pulledCardp1)
+        var pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
         var currentDeck = arrayListOf<Card>()
         var player1Deck = arrayListOf<Card>()
         var player2Deck = arrayListOf<Card>()
@@ -58,7 +43,8 @@ class MainActivity : AppCompatActivity() {
         pullCard.setOnClickListener {
             checkWin(currentDeck)
             pullCard(currentDeck, player1Deck, player2Deck)
-            pulledCard.text = "$cardsOfClubsP1, $cardsOfClubsP2, $cardsOfSpadesP1, $cardsOfSpadesP2, $cardsOfDiamondsP1, $cardsOfDiamondsP2, $cardsOfHeartsP1, $cardsOfHeartsP2"
+            pulledCardp1.text = "$cardsOfClubsP1,  $cardsOfSpadesP1, $cardsOfDiamondsP1,  $cardsOfHeartsP1"
+            pulledCardp2.text = "$cardsOfClubsP2,  $cardsOfSpadesP2, $cardsOfDiamondsP2,  $cardsOfHeartsP2"
         }
     }
 

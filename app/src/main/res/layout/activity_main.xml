@@ -26,10 +26,19 @@
         tools:layout_editor_absoluteX="176dp" />
 
     <TextView
-        android:id="@+id/pulledCard"
+        android:id="@+id/pulledCardp1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="200dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/pullCard"
+        tools:layout_editor_absoluteX="38dp" />
+
+    <TextView
+        android:id="@+id/pulledCardp2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/pullCard"
-        tools:layout_editor_absoluteX="171dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="121dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
