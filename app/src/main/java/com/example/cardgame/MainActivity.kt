@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         var player1Deck = arrayListOf<Card>()
         var player2Deck = arrayListOf<Card>()
 
-            decksCreate(currentDeck, player1Deck, player2Deck)
+           var fullDeck = decksCreate(currentDeck, player1Deck, player2Deck)
         Log.d("!!!", player1Deck.toString())// array is empty
         pullCard.setOnClickListener {
             checkWin(currentDeck)
@@ -120,8 +120,7 @@ class MainActivity : AppCompatActivity() {
             firstPlayerTurn = true
         }
     }
-    fun decksCreate(currentDeck: ArrayList<Card>, player1Deck: ArrayList<Card>, player2Deck: ArrayList<Card>) {
-        var currentDeck = arrayListOf<Card>()
+    fun decksCreate(currentDeck: ArrayList<Card>, player1Deck: ArrayList<Card>, player2Deck: ArrayList<Card>) : ArrayList<Card>{
 
         val hearts1 = Card("hearts", "1", 1)
         val hearts2 = Card("hearts", "2", 2)
@@ -144,7 +143,7 @@ class MainActivity : AppCompatActivity() {
         currentDeck.add(hearts8)
         currentDeck.add(hearts9)
         currentDeck.add(hearts10)
-
+Log.d("!!!!", currentDeck.toString())
         val diamonds1 = Card("diamonds", "1", 1)
         val diamonds2 = Card("diamonds", "2", 2)
         val diamonds3 = Card("diamonds", "3", 3)
@@ -208,7 +207,6 @@ class MainActivity : AppCompatActivity() {
         currentDeck.add(clubs9)
         currentDeck.add(clubs10)
 
-//        var player1Deck = arrayListOf<Card>()
-//        var player2Deck = arrayListOf<Card>()
+        return currentDeck
     }
 }
