@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -34,22 +36,24 @@ class MainActivity : AppCompatActivity() {
         val pullCard = findViewById<Button>(R.id.pullCard)
         var pulledCardp1 = findViewById<TextView>(R.id.pulledCardp1)
         var pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
+        var whoWins = findViewById<TextView>(R.id.whoWins)
         var currentDeck = arrayListOf<Card>()
-        var player1Deck = arrayListOf<Card>()
-        var player2Deck = arrayListOf<Card>()
+        var fullDeck = decksCreate(currentDeck)
 
-           var fullDeck = decksCreate(currentDeck, player1Deck, player2Deck)
-        Log.d("!!!", player1Deck.toString())// array is empty
+
+
+
+
         pullCard.setOnClickListener {
-            checkWin(currentDeck)
-            pullCard(currentDeck, player1Deck, player2Deck)
-            pulledCardp1.text = "$cardsOfClubsP1,  $cardsOfSpadesP1, $cardsOfDiamondsP1,  $cardsOfHeartsP1"
-            pulledCardp2.text = "$cardsOfClubsP2,  $cardsOfSpadesP2, $cardsOfDiamondsP2,  $cardsOfHeartsP2"
+            pullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins)
+
         }
     }
 
+
     fun checkWin(
         currentDeck: ArrayList<Card>,
+        whoWins: TextView
 
     ) {
         if (currentDeck.size == 0) {
@@ -57,39 +61,37 @@ class MainActivity : AppCompatActivity() {
 
         }
         if (cardsOfClubsP1 == 3 || cardsOfHeartsP1 == 3 || cardsOfSpadesP1 == 3 || cardsOfDiamondsP1 == 3) {
-            //sput "P1 wins"
+            whoWins.text = "p1!!!"
         }
         if (cardsOfClubsP2 == 3 || cardsOfHeartsP2 == 3 || cardsOfSpadesP2 == 3 || cardsOfDiamondsP2 == 3) {
-            //sput "P2 wins"
+            whoWins.text = "p2!!!"
         }
 
     }
 
     fun pullCard(
         currentDeck: ArrayList<Card>,
-        player1Deck: ArrayList<Card>,
-        player2Deck: ArrayList<Card>
+        pulledCardp1: TextView,
+        pulledCardp2: TextView,
+        whoWins: TextView
+
     ) {
         var i = (0..<currentDeck.size).random()
         if (firstPlayerTurn) {
-            player1Deck.add(currentDeck[i])
-            currentDeck.remove(currentDeck[i])
-            if (currentDeck[i].suit == "hearts") {
-                cardsOfHeartsP1++
-            }
-            if (currentDeck[i].suit == "diamonds") {
-                cardsOfDiamondsP1++
-            }
-            if (currentDeck[i].suit == "spades") {
-                cardsOfSpadesP1++
-            }
-            if (currentDeck[i].suit == "clubs") {
-                cardsOfClubsP1++
-            }
-            firstPlayerTurn = false
+            createAlertDialog(currentDeck, pulledCardp1, pulledCardp2, whoWins, i)
+
+        }
+        else if(!firstPlayerTurn) {
+            player2PullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, i)
+        }
+    }
+
+    fun player2PullCard(currentDeck: ArrayList<Card>,
+                        pulledCardp1: TextView,
+                        pulledCardp2: TextView,
+                        whoWins: TextView,
+                        i : Int) {
 //show popup with players new card
-        } else if (!firstPlayerTurn) {
-            player2Deck.add(currentDeck[i])
             currentDeck.remove(currentDeck[i])
             if (currentDeck[i].suit == "hearts") {
                 cardsOfHeartsP2++
@@ -104,9 +106,59 @@ class MainActivity : AppCompatActivity() {
                 cardsOfClubsP2++
             }
             firstPlayerTurn = true
-        }
+        pulledCardp1.text =
+            "$cardsOfClubsP1,  $cardsOfSpadesP1, $cardsOfDiamondsP1,  $cardsOfHeartsP1"
+        pulledCardp2.text =
+            "$cardsOfClubsP2,  $cardsOfSpadesP2, $cardsOfDiamondsP2,  $cardsOfHeartsP2"
+            checkWin(currentDeck, whoWins)
+
     }
-    fun decksCreate(currentDeck: ArrayList<Card>, player1Deck: ArrayList<Card>, player2Deck: ArrayList<Card>) : ArrayList<Card>{
+
+    fun createAlertDialog(
+        currentDeck: ArrayList<Card>,
+        pulledCardp1: TextView,
+        pulledCardp2: TextView,
+        whoWins: TextView,
+        i: Int
+    ) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Time to pull a card?")
+        builder.setMessage("Think.")
+
+        builder.setPositiveButton("Yes") { dialog, which ->
+            currentDeck.remove(currentDeck[i])
+            if (currentDeck[i].suit == "hearts") {
+                cardsOfHeartsP1++
+            }
+            if (currentDeck[i].suit == "diamonds") {
+                cardsOfDiamondsP1++
+            }
+            if (currentDeck[i].suit == "spades") {
+                cardsOfSpadesP1++
+            }
+            if (currentDeck[i].suit == "clubs") {
+                cardsOfClubsP1++
+            }
+            firstPlayerTurn = false
+            checkWin(currentDeck, whoWins)
+
+            pulledCardp1.text =
+                "$cardsOfClubsP1,  $cardsOfSpadesP1, $cardsOfDiamondsP1,  $cardsOfHeartsP1"
+            pulledCardp2.text =
+                "$cardsOfClubsP2,  $cardsOfSpadesP2, $cardsOfDiamondsP2,  $cardsOfHeartsP2"
+
+        }
+        builder.setNegativeButton("Pass") { dialog, which ->
+            firstPlayerTurn = false
+            Toast.makeText(this, "Player2 turn!", Toast.LENGTH_SHORT).show()
+
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+
+    fun decksCreate(currentDeck: ArrayList<Card>): ArrayList<Card> {
 
         val hearts1 = Card("hearts", "1", 1)
         val hearts2 = Card("hearts", "2", 2)
@@ -129,7 +181,7 @@ class MainActivity : AppCompatActivity() {
         currentDeck.add(hearts8)
         currentDeck.add(hearts9)
         currentDeck.add(hearts10)
-Log.d("!!!!", currentDeck.toString())
+        Log.d("!!!!", currentDeck.toString())
         val diamonds1 = Card("diamonds", "1", 1)
         val diamonds2 = Card("diamonds", "2", 2)
         val diamonds3 = Card("diamonds", "3", 3)
