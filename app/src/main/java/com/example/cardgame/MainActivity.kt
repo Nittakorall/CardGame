@@ -1,5 +1,6 @@
 package com.example.cardgame
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -266,9 +267,13 @@ class MainActivity : AppCompatActivity() {
         }
         if (cardsOfClubsP1 == 3 || cardsOfHeartsP1 == 3 || cardsOfSpadesP1 == 3 || cardsOfDiamondsP1 == 3) {
             whoWins.text = "p1!!!"
+            var intent = Intent(this,WinningActivity::class.java)
+            startActivity(intent)
         }
         if (cardsOfClubsP2 == 3 || cardsOfHeartsP2 == 3 || cardsOfSpadesP2 == 3 || cardsOfDiamondsP2 == 3) {
             whoWins.text = "p2!!!"
+            var intent = Intent(this,WinningActivity::class.java)
+            startActivity(intent)
         }
 
     }
