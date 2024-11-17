@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         var whoWins = findViewById<TextView>(R.id.whoWins)
         var currentDeck = arrayListOf<Card>()
         var fullDeck = decksCreate(currentDeck) //What's that?
-
+//val player2Status = findViewById<TextView>(R.id.player2Status)
 
         pullCard.setOnClickListener {
             pullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, pullCard)
@@ -70,13 +70,13 @@ class MainActivity : AppCompatActivity() {
         whoWins: TextView,
         i: Int, pullCard: Button
     ) {
-
+        val player2Status = findViewById<TextView>(R.id.player2Status)
         pullCard.isEnabled = false
+        player2Status.text = "Thinking..."
         Handler(Looper.getMainLooper()).postDelayed({
+            player2Status.text = "Waiting for you"
             pullCard.isEnabled = true
         }, 3000)
-
-
 
 
         Toast.makeText(this, "Player2 is thinking!", Toast.LENGTH_SHORT).show()
@@ -95,11 +95,14 @@ class MainActivity : AppCompatActivity() {
         }
         firstPlayerTurn = true
         pulledCardp1.text =
-            "Clubs: $cardsOfClubsP1,\n Spades:  $cardsOfSpadesP1,\nDiamonds: $cardsOfDiamondsP1, \nHearts: $cardsOfHeartsP1"
-        pulledCardp2.text =
-            "Clubs: $cardsOfClubsP2,\n Spades: $cardsOfSpadesP2,\nDiamonds: $cardsOfDiamondsP2,\nHearts:  $cardsOfHeartsP2"
+            "Clubs: $cardsOfClubsP1,\nSpades:  $cardsOfSpadesP1,\nDiamonds: $cardsOfDiamondsP1, \nHearts: $cardsOfHeartsP1"
+
+        Log.d("!!!!", "Clubs: ${cardsOfClubsP2}, Spades: ${cardsOfSpadesP2},Diamonds: ${cardsOfDiamondsP2},Hearts:  ${cardsOfHeartsP2}" )
+            .toString()
 
         Toast.makeText(this, "Player2 made his choice!", Toast.LENGTH_SHORT).show()
+        pulledCardp2.text =
+        "Player has ${cardsOfHeartsP2+cardsOfClubsP2+cardsOfDiamondsP2+cardsOfSpadesP2} cards"
         checkWin(currentDeck, whoWins)
 
     }
@@ -113,7 +116,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Time to pull a card?")
-        builder.setMessage("Rank of the card is ${currentDeck[i].numberOfCard} ")// works wrong, problem in index
+        builder.setMessage("Rank of the card is ${currentDeck[i].numberOfCard} ")
 
         builder.setPositiveButton("Yes") { dialog, which ->
             if (currentDeck[i].suit == "hearts") {
@@ -131,9 +134,9 @@ class MainActivity : AppCompatActivity() {
             Log.d("))))",currentDeck[i].number)
             checkWin(currentDeck, whoWins)
             pulledCardp1.text =
-                "Clubs: $cardsOfClubsP1,\n Spades:  $cardsOfSpadesP1,\nDiamonds: $cardsOfDiamondsP1, \nHearts: $cardsOfHeartsP1"
-            pulledCardp2.text =
-                "Clubs: $cardsOfClubsP2,\n Spades: $cardsOfSpadesP2,\nDiamonds: $cardsOfDiamondsP2,\nHearts:  $cardsOfHeartsP2"
+                "Clubs: $cardsOfClubsP1,\nSpades:  $cardsOfSpadesP1,\nDiamonds: $cardsOfDiamondsP1, \nHearts: $cardsOfHeartsP1"
+                Log.d("!!!!", "Clubs: ${cardsOfClubsP2}, Spades: ${cardsOfSpadesP2},Diamonds: ${cardsOfDiamondsP2},Hearts:  ${cardsOfHeartsP2}" )
+                    .toString()
 
             val builder = AlertDialog.Builder(this)
             builder.setTitle("You got ${currentDeck[i].suit}  ${currentDeck[i].numberOfCard}")
