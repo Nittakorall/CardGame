@@ -1,6 +1,8 @@
 package com.example.cardgame
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -62,10 +64,7 @@ class MainActivity : AppCompatActivity() {
         if (firstPlayerTurn) {
             player1PullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, i, pullCard)
 
-
         }
-
-
 
 
     }
@@ -78,6 +77,15 @@ class MainActivity : AppCompatActivity() {
         i: Int, pullCard: Button
     ) {
 
+        pullCard.isEnabled = false
+        Handler(Looper.getMainLooper()).postDelayed({
+            pullCard.isEnabled = true
+        }, 3000)
+
+
+
+
+        Toast.makeText(this, "Player2 is thinking!", Toast.LENGTH_SHORT).show()
         currentDeck.remove(currentDeck[i])
         if (currentDeck[i].suit == "hearts") {
             cardsOfHeartsP2++
@@ -93,11 +101,13 @@ class MainActivity : AppCompatActivity() {
         }
         firstPlayerTurn = true
         pulledCardp1.text =
-            "$cardsOfClubsP1,  $cardsOfSpadesP1, $cardsOfDiamondsP1,  $cardsOfHeartsP1"
+            "Clubs: $cardsOfClubsP1,\n Spades:  $cardsOfSpadesP1,\nDiamonds: $cardsOfDiamondsP1, \nHearts: $cardsOfHeartsP1"
         pulledCardp2.text =
-            "$cardsOfClubsP2,  $cardsOfSpadesP2, $cardsOfDiamondsP2,  $cardsOfHeartsP2"
+            "Clubs: $cardsOfClubsP2,\n Spades: $cardsOfSpadesP2,\nDiamonds: $cardsOfDiamondsP2,\nHearts:  $cardsOfHeartsP2"
+
+        Toast.makeText(this, "Player2 made his choice!", Toast.LENGTH_SHORT).show()
         checkWin(currentDeck, whoWins)
-        pullCard.isEnabled = true
+
     }
 
     fun player1PullCard(
@@ -109,10 +119,9 @@ class MainActivity : AppCompatActivity() {
     ) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Time to pull a card?")
-        builder.setMessage("Think.")
-
+        builder.setMessage("Rank of the card is ${currentDeck[i].numberOfCard} ")// works wrong, problem in index
+Log.d("))))",currentDeck[i].number)
         builder.setPositiveButton("Yes") { dialog, which ->
-            currentDeck.remove(currentDeck[i])
             if (currentDeck[i].suit == "hearts") {
                 cardsOfHeartsP1++
             }
@@ -125,21 +134,33 @@ class MainActivity : AppCompatActivity() {
             if (currentDeck[i].suit == "clubs") {
                 cardsOfClubsP1++
             }
+            Log.d("))))",currentDeck[i].number)
             checkWin(currentDeck, whoWins)
             pulledCardp1.text =
-                "$cardsOfClubsP1,  $cardsOfSpadesP1, $cardsOfDiamondsP1,  $cardsOfHeartsP1"
+                "Clubs: $cardsOfClubsP1,\n Spades:  $cardsOfSpadesP1,\nDiamonds: $cardsOfDiamondsP1, \nHearts: $cardsOfHeartsP1"
             pulledCardp2.text =
-                "$cardsOfClubsP2,  $cardsOfSpadesP2, $cardsOfDiamondsP2,  $cardsOfHeartsP2"
+                "Clubs: $cardsOfClubsP2,\n Spades: $cardsOfSpadesP2,\nDiamonds: $cardsOfDiamondsP2,\nHearts:  $cardsOfHeartsP2"
 
-            Toast.makeText(this, "You got ${currentDeck[i].suit.toString()}  ${currentDeck[i].number}", Toast.LENGTH_SHORT).show()
-            Toast.makeText(this, "Player2 turn!", Toast.LENGTH_SHORT).show()
-            player2PullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, i, pullCard)
-     //       firstPlayerTurn = false
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("You got ${currentDeck[i].suit}  ${currentDeck[i].numberOfCard}")
+
+            builder.setPositiveButton("Nice") { dialog, which ->
+                player2PullCard(
+                    currentDeck,
+                    pulledCardp1,
+                    pulledCardp2,
+                    whoWins,
+                    i,
+                    pullCard
+                )}
+
+            builder.show()
+            currentDeck.remove(currentDeck[i])
 
 
         }
         builder.setNegativeButton("Pass") { dialog, which ->
-            Toast.makeText(this, "Player2 turn!", Toast.LENGTH_SHORT).show()
+      //      Toast.makeText(this, "Player2 turn!", Toast.LENGTH_SHORT).show()
             player2PullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, i, pullCard)
         }
         val dialog = builder.create()
