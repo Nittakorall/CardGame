@@ -40,10 +40,7 @@ class MainActivity : AppCompatActivity() {
         var pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
         var whoWins = findViewById<TextView>(R.id.whoWins)
         var currentDeck = arrayListOf<Card>()
-        var fullDeck = decksCreate(currentDeck)
-
-
-
+        var fullDeck = decksCreate(currentDeck) //What's that?
 
 
         pullCard.setOnClickListener {
@@ -63,10 +60,7 @@ class MainActivity : AppCompatActivity() {
         var i = (0..<currentDeck.size).random()
         if (firstPlayerTurn) {
             player1PullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, i, pullCard)
-
         }
-
-
     }
 
     fun player2PullCard(
@@ -120,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Time to pull a card?")
         builder.setMessage("Rank of the card is ${currentDeck[i].numberOfCard} ")// works wrong, problem in index
-Log.d("))))",currentDeck[i].number)
+
         builder.setPositiveButton("Yes") { dialog, which ->
             if (currentDeck[i].suit == "hearts") {
                 cardsOfHeartsP1++
@@ -160,7 +154,6 @@ Log.d("))))",currentDeck[i].number)
 
         }
         builder.setNegativeButton("Pass") { dialog, which ->
-      //      Toast.makeText(this, "Player2 turn!", Toast.LENGTH_SHORT).show()
             player2PullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, i, pullCard)
         }
         val dialog = builder.create()
@@ -191,7 +184,7 @@ Log.d("))))",currentDeck[i].number)
         currentDeck.add(hearts8)
         currentDeck.add(hearts9)
         currentDeck.add(hearts10)
-        Log.d("!!!!", currentDeck.toString())
+
         val diamonds1 = Card("diamonds", "1", 1)
         val diamonds2 = Card("diamonds", "2", 2)
         val diamonds3 = Card("diamonds", "3", 3)
@@ -259,7 +252,7 @@ Log.d("))))",currentDeck[i].number)
     }
 
 
-    fun checkWin(
+    fun checkWin( // should start another activity
         currentDeck: ArrayList<Card>,
         whoWins: TextView
 

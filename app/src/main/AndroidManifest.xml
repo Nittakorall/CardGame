@@ -13,6 +13,12 @@
         android:theme="@style/Theme.CardGame"
         tools:targetApi="31">
         <activity
+            android:name=".WinningActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PlayersCardsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
