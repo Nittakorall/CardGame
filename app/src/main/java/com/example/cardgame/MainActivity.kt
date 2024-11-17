@@ -45,81 +45,67 @@ class MainActivity : AppCompatActivity() {
 
 
         pullCard.setOnClickListener {
-            pullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins)
+            pullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, pullCard)
 
         }
     }
 
-
-    fun checkWin(
-        currentDeck: ArrayList<Card>,
-        whoWins: TextView
-
-    ) {
-        if (currentDeck.size == 0) {
-            //sout "noone wins"
-
-        }
-        if (cardsOfClubsP1 == 3 || cardsOfHeartsP1 == 3 || cardsOfSpadesP1 == 3 || cardsOfDiamondsP1 == 3) {
-            whoWins.text = "p1!!!"
-        }
-        if (cardsOfClubsP2 == 3 || cardsOfHeartsP2 == 3 || cardsOfSpadesP2 == 3 || cardsOfDiamondsP2 == 3) {
-            whoWins.text = "p2!!!"
-        }
-
-    }
 
     fun pullCard(
         currentDeck: ArrayList<Card>,
         pulledCardp1: TextView,
         pulledCardp2: TextView,
-        whoWins: TextView
+        whoWins: TextView, pullCard: Button
 
     ) {
         var i = (0..<currentDeck.size).random()
         if (firstPlayerTurn) {
-            createAlertDialog(currentDeck, pulledCardp1, pulledCardp2, whoWins, i)
+            player1PullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, i, pullCard)
+
 
         }
-        else if(!firstPlayerTurn) {
-            player2PullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, i)
-        }
-    }
 
-    fun player2PullCard(currentDeck: ArrayList<Card>,
-                        pulledCardp1: TextView,
-                        pulledCardp2: TextView,
-                        whoWins: TextView,
-                        i : Int) {
-//show popup with players new card
-            currentDeck.remove(currentDeck[i])
-            if (currentDeck[i].suit == "hearts") {
-                cardsOfHeartsP2++
-            }
-            if (currentDeck[i].suit == "diamonds") {
-                cardsOfDiamondsP2++
-            }
-            if (currentDeck[i].suit == "spades") {
-                cardsOfSpadesP2++
-            }
-            if (currentDeck[i].suit == "clubs") {
-                cardsOfClubsP2++
-            }
-            firstPlayerTurn = true
-        pulledCardp1.text =
-            "$cardsOfClubsP1,  $cardsOfSpadesP1, $cardsOfDiamondsP1,  $cardsOfHeartsP1"
-        pulledCardp2.text =
-            "$cardsOfClubsP2,  $cardsOfSpadesP2, $cardsOfDiamondsP2,  $cardsOfHeartsP2"
-            checkWin(currentDeck, whoWins)
+
+
 
     }
 
-    fun createAlertDialog(
+    fun player2PullCard(
         currentDeck: ArrayList<Card>,
         pulledCardp1: TextView,
         pulledCardp2: TextView,
         whoWins: TextView,
-        i: Int
+        i: Int, pullCard: Button
+    ) {
+
+        currentDeck.remove(currentDeck[i])
+        if (currentDeck[i].suit == "hearts") {
+            cardsOfHeartsP2++
+        }
+        if (currentDeck[i].suit == "diamonds") {
+            cardsOfDiamondsP2++
+        }
+        if (currentDeck[i].suit == "spades") {
+            cardsOfSpadesP2++
+        }
+        if (currentDeck[i].suit == "clubs") {
+            cardsOfClubsP2++
+        }
+        firstPlayerTurn = true
+        pulledCardp1.text =
+            "$cardsOfClubsP1,  $cardsOfSpadesP1, $cardsOfDiamondsP1,  $cardsOfHeartsP1"
+        pulledCardp2.text =
+            "$cardsOfClubsP2,  $cardsOfSpadesP2, $cardsOfDiamondsP2,  $cardsOfHeartsP2"
+        checkWin(currentDeck, whoWins)
+        pullCard.isEnabled = true
+    }
+
+    fun player1PullCard(
+        currentDeck: ArrayList<Card>,
+        pulledCardp1: TextView,
+        pulledCardp2: TextView,
+        whoWins: TextView,
+        i: Int, pullCard: Button
     ) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Time to pull a card?")
@@ -139,19 +125,22 @@ class MainActivity : AppCompatActivity() {
             if (currentDeck[i].suit == "clubs") {
                 cardsOfClubsP1++
             }
-            firstPlayerTurn = false
             checkWin(currentDeck, whoWins)
-
             pulledCardp1.text =
                 "$cardsOfClubsP1,  $cardsOfSpadesP1, $cardsOfDiamondsP1,  $cardsOfHeartsP1"
             pulledCardp2.text =
                 "$cardsOfClubsP2,  $cardsOfSpadesP2, $cardsOfDiamondsP2,  $cardsOfHeartsP2"
 
+            Toast.makeText(this, "You got ${currentDeck[i].suit.toString()}  ${currentDeck[i].number}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Player2 turn!", Toast.LENGTH_SHORT).show()
+            player2PullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, i, pullCard)
+     //       firstPlayerTurn = false
+
+
         }
         builder.setNegativeButton("Pass") { dialog, which ->
-            firstPlayerTurn = false
             Toast.makeText(this, "Player2 turn!", Toast.LENGTH_SHORT).show()
-
+            player2PullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, i, pullCard)
         }
         val dialog = builder.create()
         dialog.show()
@@ -246,5 +235,24 @@ class MainActivity : AppCompatActivity() {
         currentDeck.add(clubs10)
 
         return currentDeck
+    }
+
+
+    fun checkWin(
+        currentDeck: ArrayList<Card>,
+        whoWins: TextView
+
+    ) {
+        if (currentDeck.size == 0) {
+            //sout "noone wins"
+
+        }
+        if (cardsOfClubsP1 == 3 || cardsOfHeartsP1 == 3 || cardsOfSpadesP1 == 3 || cardsOfDiamondsP1 == 3) {
+            whoWins.text = "p1!!!"
+        }
+        if (cardsOfClubsP2 == 3 || cardsOfHeartsP2 == 3 || cardsOfSpadesP2 == 3 || cardsOfDiamondsP2 == 3) {
+            whoWins.text = "p2!!!"
+        }
+
     }
 }
