@@ -98,12 +98,15 @@ class MainActivity : AppCompatActivity() {
         pulledCardp1.text =
             "Clubs: $cardsOfClubsP1,\nSpades:  $cardsOfSpadesP1,\nDiamonds: $cardsOfDiamondsP1, \nHearts: $cardsOfHeartsP1"
 
-        Log.d("!!!!", "Clubs: ${cardsOfClubsP2}, Spades: ${cardsOfSpadesP2},Diamonds: ${cardsOfDiamondsP2},Hearts:  ${cardsOfHeartsP2}" )
+        Log.d(
+            "!!!!",
+            "Clubs: ${cardsOfClubsP2}, Spades: ${cardsOfSpadesP2},Diamonds: ${cardsOfDiamondsP2},Hearts:  ${cardsOfHeartsP2}"
+        )
             .toString()
 
         Toast.makeText(this, "Player2 made his choice!", Toast.LENGTH_SHORT).show()
         pulledCardp2.text =
-        "Player has ${cardsOfHeartsP2+cardsOfClubsP2+cardsOfDiamondsP2+cardsOfSpadesP2} cards"
+            "Player has ${cardsOfHeartsP2 + cardsOfClubsP2 + cardsOfDiamondsP2 + cardsOfSpadesP2} cards"
         checkWin(currentDeck, whoWins)
 
     }
@@ -132,12 +135,15 @@ class MainActivity : AppCompatActivity() {
             if (currentDeck[i].suit == "clubs") {
                 cardsOfClubsP1++
             }
-            Log.d("))))",currentDeck[i].number)
+            Log.d("))))", currentDeck[i].number)
             checkWin(currentDeck, whoWins)
             pulledCardp1.text =
                 "Clubs: $cardsOfClubsP1,\nSpades:  $cardsOfSpadesP1,\nDiamonds: $cardsOfDiamondsP1, \nHearts: $cardsOfHeartsP1"
-                Log.d("!!!!", "Clubs: ${cardsOfClubsP2}, Spades: ${cardsOfSpadesP2},Diamonds: ${cardsOfDiamondsP2},Hearts:  ${cardsOfHeartsP2}" )
-                    .toString()
+            Log.d(
+                "!!!!",
+                "Clubs: ${cardsOfClubsP2}, Spades: ${cardsOfSpadesP2},Diamonds: ${cardsOfDiamondsP2},Hearts:  ${cardsOfHeartsP2}"
+            )
+                .toString()
 
             val builder = AlertDialog.Builder(this)
             builder.setTitle("You got ${currentDeck[i].suit}  ${currentDeck[i].numberOfCard}")
@@ -150,7 +156,8 @@ class MainActivity : AppCompatActivity() {
                     whoWins,
                     i,
                     pullCard
-                )}
+                )
+            }
 
             builder.show()
             currentDeck.remove(currentDeck[i])
@@ -261,18 +268,26 @@ class MainActivity : AppCompatActivity() {
         whoWins: TextView
 
     ) {
+        var i: Int
         if (currentDeck.size == 0) {
             //sout "noone wins"
-
+            var intent = Intent(this, WinningActivity::class.java)
+            i = 0
+            intent.putExtra("whoWin", i)
+            startActivity(intent)
         }
         if (cardsOfClubsP1 == 3 || cardsOfHeartsP1 == 3 || cardsOfSpadesP1 == 3 || cardsOfDiamondsP1 == 3) {
             whoWins.text = "p1!!!"
-            var intent = Intent(this,WinningActivity::class.java)
+            i = 1
+            var intent = Intent(this, WinningActivity::class.java)
+            intent.putExtra("whoWin", i)
             startActivity(intent)
         }
         if (cardsOfClubsP2 == 3 || cardsOfHeartsP2 == 3 || cardsOfSpadesP2 == 3 || cardsOfDiamondsP2 == 3) {
             whoWins.text = "p2!!!"
-            var intent = Intent(this,WinningActivity::class.java)
+            i = 2
+            var intent = Intent(this, WinningActivity::class.java)
+            intent.putExtra("whoWin", i)
             startActivity(intent)
         }
 

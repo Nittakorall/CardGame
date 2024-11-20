@@ -7,4 +7,40 @@
     android:layout_height="match_parent"
     tools:context=".WinningActivity">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="302dp"
+        android:layout_height="143dp"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="187dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="143dp">
+
+            <TextView
+                android:id="@+id/resultView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player wins"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="51dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="141dp"
+        tools:layout_editor_absoluteX="141dp"
+        tools:layout_editor_absoluteY="87dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nice"
+        tools:layout_editor_absoluteX="158dp"
+        tools:layout_editor_absoluteY="343dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
