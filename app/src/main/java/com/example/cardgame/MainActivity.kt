@@ -39,28 +39,35 @@ class MainActivity : AppCompatActivity() {
         val pullCard = findViewById<Button>(R.id.pullCard)
         var pulledCardp1 = findViewById<TextView>(R.id.pulledCardp1)
         var pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
-        var whoWins = findViewById<TextView>(R.id.whoWins)
+
         var currentDeck = arrayListOf<Card>()
         var fullDeck = decksCreate(currentDeck) //What's that?
-//val player2Status = findViewById<TextView>(R.id.player2Status)
-
+val rulesButton = findViewById<Button>(R.id.rulesButton)
+        rulesButton.setOnClickListener {
+            showRules()
+        }
         pullCard.setOnClickListener {
-            pullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, pullCard)
+            pullCard(currentDeck, pulledCardp1, pulledCardp2, pullCard)
 
         }
     }
-
-
+//need main method that starts other methods when playing one more time and put in in onResume()29:16
+fun showRules() {
+    val rulesFragment = RulesFragment()
+    val transaction = supportFragmentManager.beginTransaction()
+    transaction.add(R.id.rulesFragment, rulesFragment, "rules")
+    transaction.commit()
+}
     fun pullCard(
         currentDeck: ArrayList<Card>,
         pulledCardp1: TextView,
         pulledCardp2: TextView,
-        whoWins: TextView, pullCard: Button
+        pullCard: Button
 
     ) {
         var i = (0..<currentDeck.size).random()
         if (firstPlayerTurn) {
-            player1PullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, i, pullCard)
+            player1PullCard(currentDeck, pulledCardp1, pulledCardp2, i, pullCard)
         }
     }
 
@@ -68,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         currentDeck: ArrayList<Card>,
         pulledCardp1: TextView,
         pulledCardp2: TextView,
-        whoWins: TextView,
+
         i: Int, pullCard: Button
     ) {
         val player2Status = findViewById<TextView>(R.id.player2Status)
@@ -106,8 +113,8 @@ class MainActivity : AppCompatActivity() {
 
         Toast.makeText(this, "Player2 made his choice!", Toast.LENGTH_SHORT).show()
         pulledCardp2.text =
-            "Player has ${cardsOfHeartsP2 + cardsOfClubsP2 + cardsOfDiamondsP2 + cardsOfSpadesP2} cards"
-        checkWin(currentDeck, whoWins)
+            "Player has ${cardsOfHeartsP2 + cardsOfClubsP2 + cardsOfDiamondsP2 + cardsOfSpadesP2} card(s)"
+        checkWin(currentDeck)
 
     }
 
@@ -115,7 +122,6 @@ class MainActivity : AppCompatActivity() {
         currentDeck: ArrayList<Card>,
         pulledCardp1: TextView,
         pulledCardp2: TextView,
-        whoWins: TextView,
         i: Int, pullCard: Button
     ) {
         val builder = AlertDialog.Builder(this)
@@ -136,7 +142,7 @@ class MainActivity : AppCompatActivity() {
                 cardsOfClubsP1++
             }
             Log.d("))))", currentDeck[i].number)
-            checkWin(currentDeck, whoWins)
+            checkWin(currentDeck, )
             pulledCardp1.text =
                 "Clubs: $cardsOfClubsP1,\nSpades:  $cardsOfSpadesP1,\nDiamonds: $cardsOfDiamondsP1, \nHearts: $cardsOfHeartsP1"
             Log.d(
@@ -153,7 +159,6 @@ class MainActivity : AppCompatActivity() {
                     currentDeck,
                     pulledCardp1,
                     pulledCardp2,
-                    whoWins,
                     i,
                     pullCard
                 )
@@ -165,7 +170,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         builder.setNegativeButton("Pass") { dialog, which ->
-            player2PullCard(currentDeck, pulledCardp1, pulledCardp2, whoWins, i, pullCard)
+            player2PullCard(currentDeck, pulledCardp1, pulledCardp2, i, pullCard)
         }
         val dialog = builder.create()
         dialog.show()
@@ -265,7 +270,7 @@ class MainActivity : AppCompatActivity() {
 
     fun checkWin( // should start another activity
         currentDeck: ArrayList<Card>,
-        whoWins: TextView
+
 
     ) {
         var i: Int
@@ -277,14 +282,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         if (cardsOfClubsP1 == 3 || cardsOfHeartsP1 == 3 || cardsOfSpadesP1 == 3 || cardsOfDiamondsP1 == 3) {
-            whoWins.text = "p1!!!"
+
             i = 1
             var intent = Intent(this, WinningActivity::class.java)
             intent.putExtra("whoWin", i)
             startActivity(intent)
         }
         if (cardsOfClubsP2 == 3 || cardsOfHeartsP2 == 3 || cardsOfSpadesP2 == 3 || cardsOfDiamondsP2 == 3) {
-            whoWins.text = "p2!!!"
+
             i = 2
             var intent = Intent(this, WinningActivity::class.java)
             intent.putExtra("whoWin", i)

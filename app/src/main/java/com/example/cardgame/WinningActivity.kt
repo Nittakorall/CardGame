@@ -1,6 +1,7 @@
 package com.example.cardgame
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +21,7 @@ class WinningActivity : AppCompatActivity() {
             insets
         }
         resultView = findViewById(R.id.resultView)
-
+val backButton =  findViewById<Button>(R.id.backButton)
         val whoWin = intent.getIntExtra("whoWin", 0)
         if (whoWin == 0) {
 resultView.text = "Noone wins this time"
@@ -31,6 +32,8 @@ resultView.text = "Player 1 wins!!!"
         if (whoWin == 2) {
             resultView.text = "Player 2 wins!!!"
         }
-
+backButton.setOnClickListener {
+    finish() // goes back to existing activity
+}
     }
 }
