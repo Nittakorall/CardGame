@@ -42,22 +42,43 @@ class MainActivity : AppCompatActivity() {
 
         var currentDeck = arrayListOf<Card>()
         var fullDeck = decksCreate(currentDeck) //What's that?
-val rulesButton = findViewById<Button>(R.id.rulesButton)
+        val rulesButton = findViewById<Button>(R.id.rulesButton)
         rulesButton.setOnClickListener {
-            showRules()
+            if (rulesButton.text == "Rules") {
+                showRules(rulesButton, pullCard)
+            } else {
+                hideRules(rulesButton, pullCard)
+            }
         }
+
+
         pullCard.setOnClickListener {
             pullCard(currentDeck, pulledCardp1, pulledCardp2, pullCard)
 
         }
     }
-//need main method that starts other methods when playing one more time and put in in onResume()29:16
-fun showRules() {
-    val rulesFragment = RulesFragment()
-    val transaction = supportFragmentManager.beginTransaction()
-    transaction.add(R.id.rulesFragment, rulesFragment, "rules")
-    transaction.commit()
-}
+
+    //need main method that starts other methods when playing one more time and put in in onResume()29:16
+    fun showRules(rulesButton: Button, pullCard: Button) {
+        pullCard.isEnabled = false
+        val rulesFragment = RulesFragment()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.rulesFragment, rulesFragment, "rules")
+        transaction.commit()
+        rulesButton.text = "Hide"
+    }
+
+    fun hideRules(rulesButton: Button, pullCard: Button) {
+        pullCard.isEnabled = true
+        val rulesFragment = supportFragmentManager.findFragmentByTag("rules")
+        val transaction = supportFragmentManager.beginTransaction()
+        if (rulesFragment != null) {
+            transaction.remove(rulesFragment)
+            transaction.commit()
+            rulesButton.text = "Rules"
+        }
+    }
+
     fun pullCard(
         currentDeck: ArrayList<Card>,
         pulledCardp1: TextView,
@@ -142,7 +163,7 @@ fun showRules() {
                 cardsOfClubsP1++
             }
             Log.d("))))", currentDeck[i].number)
-            checkWin(currentDeck, )
+            checkWin(currentDeck)
             pulledCardp1.text =
                 "Clubs: $cardsOfClubsP1,\nSpades:  $cardsOfSpadesP1,\nDiamonds: $cardsOfDiamondsP1, \nHearts: $cardsOfHeartsP1"
             Log.d(
@@ -268,11 +289,12 @@ fun showRules() {
     }
 
 
-    fun checkWin( // should start another activity
+    fun checkWin(
+        // should start another activity
         currentDeck: ArrayList<Card>,
 
 
-    ) {
+        ) {
         var i: Int
         if (currentDeck.size == 0) {
             //sout "noone wins"
