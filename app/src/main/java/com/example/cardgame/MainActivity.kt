@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Gravity
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -13,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         val pullCard = findViewById<Button>(R.id.pullCard)
         var pulledCardp1 = findViewById<TextView>(R.id.pulledCardp1)
         var pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
-
+        val pleaseWait = findViewById<FrameLayout>(R.id.pleaseWait)
         var currentDeck = arrayListOf<Card>()
         var fullDeck = decksCreate(currentDeck) //What's that?
         val rulesButton = findViewById<Button>(R.id.rulesButton)
@@ -53,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
 
         pullCard.setOnClickListener {
-            pullCard(currentDeck, pulledCardp1, pulledCardp2, pullCard)
+            pullCard(currentDeck, pulledCardp1, pulledCardp2, pullCard, pleaseWait)
 
         }
     }
@@ -83,12 +86,13 @@ class MainActivity : AppCompatActivity() {
         currentDeck: ArrayList<Card>,
         pulledCardp1: TextView,
         pulledCardp2: TextView,
-        pullCard: Button
+        pullCard: Button,
+        pleaseWait: FrameLayout
 
     ) {
         var i = (0..<currentDeck.size).random()
         if (firstPlayerTurn) {
-            player1PullCard(currentDeck, pulledCardp1, pulledCardp2, i, pullCard)
+            player1PullCard(currentDeck, pulledCardp1, pulledCardp2, i, pullCard, pleaseWait)
         }
     }
 
@@ -96,19 +100,24 @@ class MainActivity : AppCompatActivity() {
         currentDeck: ArrayList<Card>,
         pulledCardp1: TextView,
         pulledCardp2: TextView,
-
-        i: Int, pullCard: Button
+        i: Int, pullCard: Button,
+        pleaseWait: FrameLayout
     ) {
         val player2Status = findViewById<TextView>(R.id.player2Status)
         pullCard.isEnabled = false
         player2Status.text = "Thinking..."
+        Snackbar.make(pleaseWait, "Computer is thinking!", Snackbar.LENGTH_SHORT).show()
         Handler(Looper.getMainLooper()).postDelayed({
             player2Status.text = "Waiting for you"
+            Snackbar.make(pleaseWait, "Computer is done thinking!", Snackbar.LENGTH_SHORT).show()
             pullCard.isEnabled = true
+
         }, 3000)
 
 
-        Toast.makeText(this, "Player2 is thinking!", Toast.LENGTH_SHORT).show()
+
+
+
         currentDeck.remove(currentDeck[i])
         if (currentDeck[i].suit == "hearts") {
             cardsOfHeartsP2++
@@ -132,9 +141,10 @@ class MainActivity : AppCompatActivity() {
         )
             .toString()
 
-        Toast.makeText(this, "Player2 made his choice!", Toast.LENGTH_SHORT).show()
+    //   Snackbar.make(pleaseWait, "Computer is done thinking!", Snackbar.LENGTH_SHORT).show()
+
         pulledCardp2.text =
-            "Player has ${cardsOfHeartsP2 + cardsOfClubsP2 + cardsOfDiamondsP2 + cardsOfSpadesP2} card(s)"
+            "Has ${cardsOfHeartsP2 + cardsOfClubsP2 + cardsOfDiamondsP2 + cardsOfSpadesP2} card(s)"
         checkWin(currentDeck)
 
     }
@@ -143,7 +153,8 @@ class MainActivity : AppCompatActivity() {
         currentDeck: ArrayList<Card>,
         pulledCardp1: TextView,
         pulledCardp2: TextView,
-        i: Int, pullCard: Button
+        i: Int, pullCard: Button,
+        pleaseWait: FrameLayout
     ) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Time to pull a card?")
@@ -181,7 +192,7 @@ class MainActivity : AppCompatActivity() {
                     pulledCardp1,
                     pulledCardp2,
                     i,
-                    pullCard
+                    pullCard, pleaseWait
                 )
             }
 
@@ -191,7 +202,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         builder.setNegativeButton("Pass") { dialog, which ->
-            player2PullCard(currentDeck, pulledCardp1, pulledCardp2, i, pullCard)
+            player2PullCard(currentDeck, pulledCardp1, pulledCardp2, i, pullCard, pleaseWait)
         }
         val dialog = builder.create()
         dialog.show()
