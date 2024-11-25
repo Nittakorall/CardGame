@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 
 
 class Player(val mainActivity: MainActivity,
-    val myContext: Context, val name: String, val winTimes: Int, val lostTimes: Int
+             val myContext: Context, var name: String, val winTimes: Int, val lostTimes: Int
 ) {
 
     var firstPlayerTurn: Boolean = true

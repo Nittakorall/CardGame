@@ -24,10 +24,11 @@ import com.google.android.material.snackbar.Snackbar
 class MainActivity : AppCompatActivity() {
 
 
-    var firstPlayerTurn: Boolean = true
-    var computerPlayer = Player(this, this, "Computer", 0, 0)
+//    var firstPlayerTurn: Boolean = true
+//    var computerPlayer = Player(this, this, "Computer", 0, 0)
 
-    var realPlayer = Player(this, this, "Player1", 0, 0) // get name before creating
+    var realPlayer = Player(this, this, "Player1", 0, 0)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -42,21 +43,15 @@ class MainActivity : AppCompatActivity() {
         var pulledCardp1 = findViewById<TextView>(R.id.pulledCardp1)
         var pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
         val pleaseWait = findViewById<FrameLayout>(R.id.pleaseWait)
-        var currentDeck = arrayListOf<Card>()
-        var fullDeck = decksCreate(currentDeck) //What's that?
         val rulesButton = findViewById<Button>(R.id.rulesButton)
         val player2Status = findViewById<TextView>(R.id.player2Status)
+        val player1Name = findViewById<TextView>(R.id.Player1Name)// get name before creating
+
+        var realPlayer = Player(this, this, "Player1", 0, 0)
+        var currentDeck = arrayListOf<Card>()
+        decksCreate(currentDeck)
         realPlayer.bothPlayersCards()
-        nameGetter { name ->
-            Log.d("SOUT", name) ///functional
-        }
-        rulesButton.setOnClickListener {  //functional
-            if (rulesButton.text == "Rules") {
-                showRules(rulesButton, pullCard)
-            } else {
-                hideRules(rulesButton, pullCard)
-            }
-        }
+
 
 
         pullCard.setOnClickListener {
@@ -70,11 +65,24 @@ class MainActivity : AppCompatActivity() {
             )
 
         }
+        rulesButton.setOnClickListener {  //functional
+            if (rulesButton.text == "Rules") {
+                showRules(rulesButton, pullCard)
+            } else {
+                hideRules(rulesButton, pullCard)
+            }
+        }
+
+        nameGetter { name ->
+            realPlayer.name = name
+            player1Name.text = name///functional
+        }
+
     }
 
     fun nameGetter(callback: (String) -> Unit) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("What's your name?")
+        builder.setTitle("Hello there! What's your name?")
         val input = EditText(this)
         builder.setView(input)
         builder.setPositiveButton("There you go") { dialog, _ ->
@@ -85,8 +93,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-    //need main method that starts other methods when playing one more time and put in in onResume()29:16
     fun showRules(rulesButton: Button, pullCard: Button) {
         pullCard.isEnabled = false
         val rulesFragment = RulesFragment()
@@ -107,7 +113,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+//        fun createGame(
+//            pullCard: Button,
+//            player2Status: TextView,
+//            currentDeck: ArrayList<Card>,
+//            pulledCardp1: TextView,
+//            pulledCardp2: TextView,
+//            pleaseWait: FrameLayout
+//        ) { //set all cards back
+//            var currentDeck = arrayListOf<Card>()
+//            decksCreate(currentDeck)
+//            realPlayer.bothPlayersCards()
+//            pullCard.setOnClickListener {
+//                realPlayer.pullCard(
+//                    player2Status,
+//                    currentDeck,
+//                    pulledCardp1,
+//                    pulledCardp2,
+//                    pullCard,
+//                    pleaseWait
+//                )
+//
+//            }
 
+
+    //need main method that starts other methods when playing one more time and put in in onResume()29:16
 
 
     fun decksCreate(currentDeck: ArrayList<Card>): ArrayList<Card> {
