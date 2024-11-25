@@ -24,8 +24,8 @@ import com.google.android.material.snackbar.Snackbar
 class MainActivity : AppCompatActivity() {
 
 
-    //var firstPlayerTurn: Boolean = true
-   // var computerPlayer = Player(this, this, "Computer", 0, 0)
+    var firstPlayerTurn: Boolean = true
+    var computerPlayer = Player(this, this, "Computer", 0, 0)
 
     var realPlayer = Player(this, this, "Player1", 0, 0) // get name before creating
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         var pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
         val pleaseWait = findViewById<FrameLayout>(R.id.pleaseWait)
         var currentDeck = arrayListOf<Card>()
-
+        var fullDeck = decksCreate(currentDeck) //What's that?
         val rulesButton = findViewById<Button>(R.id.rulesButton)
         val player2Status = findViewById<TextView>(R.id.player2Status)
         realPlayer.bothPlayersCards()
@@ -52,10 +52,8 @@ class MainActivity : AppCompatActivity() {
         }
         rulesButton.setOnClickListener {  //functional
             if (rulesButton.text == "Rules") {
-              //  pullCard.isEnabled =false
                 showRules(rulesButton, pullCard)
             } else {
-              //  pullCard.isEnabled =true
                 hideRules(rulesButton, pullCard)
             }
         }
@@ -108,6 +106,7 @@ class MainActivity : AppCompatActivity() {
             rulesButton.text = "Rules"
         }
     }
+
 
 
 
