@@ -91,7 +91,8 @@ Log.d("SOUT", bothPlayersCards.toString())
             Log.d("))))", bothPlayersCards.toString())
             mainActivity.checkWin(currentDeck, bothPlayersCards)
             pulledCardp1.text =
-                "Clubs: $bothPlayersCards[3],\nSpades:  $ bothPlayersCards[2],\nDiamonds: $bothPlayersCards[1], \nHearts: $bothPlayersCards[0]"
+                "Clubs: " + bothPlayersCards[3] + " ,\nSpades: " + bothPlayersCards[2] + ",\nDiamonds: "+bothPlayersCards[1] +" \nHearts: "+bothPlayersCards[0]
+
             Log.d(
                 "!!!!",
                 "Clubs: $bothPlayersCards[7], Spades: $bothPlayersCards[6],Diamonds: $bothPlayersCards[5],Hearts:  $bothPlayersCards[4]"
@@ -177,7 +178,7 @@ Log.d("SOUT", bothPlayersCards.toString())
         }
         firstPlayerTurn = true
         pulledCardp1.text =
-            "Clubs: $bothPlayersCards[3],\nSpades:  $ bothPlayersCards[2],\nDiamonds: $bothPlayersCards[1], \nHearts: $bothPlayersCards[0]"
+            "Clubs: " + bothPlayersCards[3] + " ,\nSpades: " + bothPlayersCards[2] + ",\nDiamonds: "+bothPlayersCards[1] +" \nHearts: "+bothPlayersCards[0]
         Log.d(
             "!!!!",
             "Clubs: $bothPlayersCards[7], Spades: $bothPlayersCards[6],Diamonds: $bothPlayersCards[5],Hearts:  $bothPlayersCards[4]"

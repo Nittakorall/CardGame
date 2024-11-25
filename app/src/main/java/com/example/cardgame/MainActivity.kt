@@ -24,8 +24,8 @@ import com.google.android.material.snackbar.Snackbar
 class MainActivity : AppCompatActivity() {
 
 
-    var firstPlayerTurn: Boolean = true
-    var computerPlayer = Player(this, this, "Computer", 0, 0)
+    //var firstPlayerTurn: Boolean = true
+   // var computerPlayer = Player(this, this, "Computer", 0, 0)
 
     var realPlayer = Player(this, this, "Player1", 0, 0) // get name before creating
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         var pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
         val pleaseWait = findViewById<FrameLayout>(R.id.pleaseWait)
         var currentDeck = arrayListOf<Card>()
-        var fullDeck = decksCreate(currentDeck) //What's that?
+
         val rulesButton = findViewById<Button>(R.id.rulesButton)
         val player2Status = findViewById<TextView>(R.id.player2Status)
         realPlayer.bothPlayersCards()
@@ -52,8 +52,10 @@ class MainActivity : AppCompatActivity() {
         }
         rulesButton.setOnClickListener {  //functional
             if (rulesButton.text == "Rules") {
+              //  pullCard.isEnabled =false
                 showRules(rulesButton, pullCard)
             } else {
+              //  pullCard.isEnabled =true
                 hideRules(rulesButton, pullCard)
             }
         }
@@ -107,137 +109,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//fun pullCard(
-//    currentDeck: ArrayList<Card>,
-//    pulledCardp1: TextView,
-//    pulledCardp2: TextView,
-//    pullCard: Button,
-//    pleaseWait: FrameLayout
-//
-//) {
-//    var i = (0..<currentDeck.size).random()
-//    if (firstPlayerTurn) {
-//        player1PullCard(currentDeck, pulledCardp1, pulledCardp2, i, pullCard, pleaseWait)
-//    }
-//}
-//
-//fun player2PullCard(
-//    currentDeck: ArrayList<Card>,
-//    pulledCardp1: TextView,
-//    pulledCardp2: TextView,
-//    i: Int, pullCard: Button,
-//    pleaseWait: FrameLayout
-//) {
-//    val player2Status = findViewById<TextView>(R.id.player2Status)
-//    pullCard.isEnabled = false
-//    player2Status.text = "Thinking..."
-//    val snackbar = Snackbar.make(pleaseWait, "Computer is thinking!", Snackbar.LENGTH_SHORT)
-//
-//    //app keeps crashing with code below
-////        val snackbarView = snackbar.view
-////        val params = snackbarView.layoutParams as CoordinatorLayout.LayoutParams
-////        params.gravity = Gravity.CENTER
-////        snackbarView.layoutParams = params
-//    snackbar.show()
-//    Handler(Looper.getMainLooper()).postDelayed({
-//        player2Status.text = "Waiting for you"
-//        Snackbar.make(pleaseWait, "Computer is done thinking!", Snackbar.LENGTH_SHORT).show()
-//        pullCard.isEnabled = true
-//
-//    }, 1000)
-//
-//
-//
-//
-//
-//    currentDeck.remove(currentDeck[i])
-//    if (currentDeck[i].suit == "hearts") {
-//        cardsOfHeartsP2++
-//    }
-//    if (currentDeck[i].suit == "diamonds") {
-//        cardsOfDiamondsP2++
-//    }
-//    if (currentDeck[i].suit == "spades") {
-//        cardsOfSpadesP2++
-//    }
-//    if (currentDeck[i].suit == "clubs") {
-//        cardsOfClubsP2++
-//    }
-//    firstPlayerTurn = true
-//    pulledCardp1.text =
-//        "Clubs: $cardsOfClubsP1,\nSpades:  $cardsOfSpadesP1,\nDiamonds: $cardsOfDiamondsP1, \nHearts: $cardsOfHeartsP1"
-//
-//    Log.d(
-//        "!!!!",
-//        "Clubs: ${cardsOfClubsP2}, Spades: ${cardsOfSpadesP2},Diamonds: ${cardsOfDiamondsP2},Hearts:  ${cardsOfHeartsP2}"
-//    )
-//        .toString()
-//
-//    //   Snackbar.make(pleaseWait, "Computer is done thinking!", Snackbar.LENGTH_SHORT).show()
-//
-//    pulledCardp2.text =
-//        "Has ${cardsOfHeartsP2 + cardsOfClubsP2 + cardsOfDiamondsP2 + cardsOfSpadesP2} card(s)"
-//    checkWin(currentDeck)
-//
-//}
-//
-//fun player1PullCard(
-//    currentDeck: ArrayList<Card>,
-//    pulledCardp1: TextView,
-//    pulledCardp2: TextView,
-//    i: Int, pullCard: Button,
-//    pleaseWait: FrameLayout
-//) {
-//    val builder = AlertDialog.Builder(this)
-//    builder.setTitle("Time to pull a card?")
-//    builder.setMessage("Rank of the card is ${currentDeck[i].numberOfCard} ")
-//
-//    builder.setPositiveButton("Yes") { dialog, which ->
-//        if (currentDeck[i].suit == "hearts") {
-//            cardsOfHeartsP1++
-//        }
-//        if (currentDeck[i].suit == "diamonds") {
-//            cardsOfDiamondsP1++
-//        }
-//        if (currentDeck[i].suit == "spades") {
-//            cardsOfSpadesP1++
-//        }
-//        if (currentDeck[i].suit == "clubs") {
-//            cardsOfClubsP1++
-//        }
-//        Log.d("))))", currentDeck[i].number)
-//        checkWin(currentDeck)
-//        pulledCardp1.text =
-//            "Clubs: $cardsOfClubsP1,\nSpades:  $cardsOfSpadesP1,\nDiamonds: $cardsOfDiamondsP1, \nHearts: $cardsOfHeartsP1"
-//        Log.d(
-//            "!!!!",
-//            "Clubs: ${cardsOfClubsP2}, Spades: ${cardsOfSpadesP2},Diamonds: ${cardsOfDiamondsP2},Hearts:  ${cardsOfHeartsP2}"
-//        )
-//            .toString()
-//
-//        val builder = AlertDialog.Builder(this)
-//        builder.setTitle("You got ${currentDeck[i].suit}  ${currentDeck[i].numberOfCard}")
-//
-//        builder.setPositiveButton("Nice") { dialog, which ->
-//            player2PullCard(
-//                currentDeck,
-//                pulledCardp1,
-//                pulledCardp2,
-//                i,
-//                pullCard, pleaseWait
-//            )
-//        }
-//
-//        builder.show()
-//        currentDeck.remove(currentDeck[i])
-//
-//
-//    }
-//    builder.setNegativeButton("Pass") { dialog, which ->
-//        player2PullCard(currentDeck, pulledCardp1, pulledCardp2, i, pullCard, pleaseWait)
-//    }
-//    val dialog = builder.create()
-//    dialog.show()
 
 
     fun decksCreate(currentDeck: ArrayList<Card>): ArrayList<Card> {

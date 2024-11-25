@@ -19,8 +19,7 @@
             android:id="@+id/textView2"
             android:layout_width="413dp"
             android:layout_height="734dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/back"
+            android:background="@color/bluegray"
             android:text="lakdrjgladkjlvkdjvlksndlbkadnlfkvns
 dlbksnb
 adlfbkn
@@ -31,7 +30,6 @@ slktblsbmlktmbskbtltkynbl
 ft"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
