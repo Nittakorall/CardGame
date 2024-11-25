@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 //    var firstPlayerTurn: Boolean = true
 //    var computerPlayer = Player(this, this, "Computer", 0, 0)
 
-    var realPlayer = Player(this, this, "Player1", 0, 0)
+    //   var realPlayer = Player(this, this, "Player1", 0, 0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
         var currentDeck = arrayListOf<Card>()
         decksCreate(currentDeck)
         realPlayer.bothPlayersCards()
-
 
 
         pullCard.setOnClickListener {
@@ -79,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
     fun nameGetter(callback: (String) -> Unit) {
         val builder = AlertDialog.Builder(this)
@@ -112,29 +112,6 @@ class MainActivity : AppCompatActivity() {
             rulesButton.text = "Rules"
         }
     }
-
-//        fun createGame(
-//            pullCard: Button,
-//            player2Status: TextView,
-//            currentDeck: ArrayList<Card>,
-//            pulledCardp1: TextView,
-//            pulledCardp2: TextView,
-//            pleaseWait: FrameLayout
-//        ) { //set all cards back
-//            var currentDeck = arrayListOf<Card>()
-//            decksCreate(currentDeck)
-//            realPlayer.bothPlayersCards()
-//            pullCard.setOnClickListener {
-//                realPlayer.pullCard(
-//                    player2Status,
-//                    currentDeck,
-//                    pulledCardp1,
-//                    pulledCardp2,
-//                    pullCard,
-//                    pleaseWait
-//                )
-//
-//            }
 
 
     //need main method that starts other methods when playing one more time and put in in onResume()29:16
@@ -260,5 +237,29 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    fun createGame(
+        pullCard: Button,
+        player2Status: TextView,
+        realPlayer: Player,
+        pulledCardp1: TextView,
+        pulledCardp2: TextView,
+        pleaseWait: FrameLayout
+    ) { //set all cards back
+        var currentDeck = arrayListOf<Card>()
+        decksCreate(currentDeck)
+        realPlayer.bothPlayersCards()
+        pullCard.setOnClickListener {
+            realPlayer.pullCard(
+                player2Status,
+                currentDeck,
+                pulledCardp1,
+                pulledCardp2,
+                pullCard,
+                pleaseWait
+            )
+
+        }
     }
 }
