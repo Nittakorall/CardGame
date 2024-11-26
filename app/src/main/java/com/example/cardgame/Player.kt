@@ -110,6 +110,7 @@ class Player(
                     pulledCardp2,
                     i,
                     pullCard, pleaseWait, bothPlayersCardsInMain
+
                 )
             }
 
@@ -139,7 +140,9 @@ class Player(
         pulledCardp1: TextView,
         pulledCardp2: TextView,
         i: Int, pullCard: Button,
+
         pleaseWait: FrameLayout, bothPlayersCardsInMain: ArrayList<Int>
+
     ) {
 
         pullCard.isEnabled = false
@@ -154,8 +157,6 @@ class Player(
             pullCard.isEnabled = true
 
         }, 1000)
-
-
 
 
 
@@ -180,6 +181,6 @@ class Player(
         pulledCardp2.text =
             "Has ${bothPlayersCardsInMain[7] + bothPlayersCardsInMain[6] + bothPlayersCardsInMain[5] + bothPlayersCardsInMain[4]} card(s)"
         mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
-
+        //cardsLeft.text = "Cards left: " + currentDeck.size
     }
 }
