@@ -25,14 +25,15 @@ class MainActivity : AppCompatActivity() {
 
 
     var realPlayer = Player(this, this, "Player1", 0, 0)
-    var currentDeck = arrayListOf<Card>()
-lateinit var pullCard: Button
-lateinit var pulledCardp1 : TextView
-lateinit var  pulledCardp2 : TextView
-lateinit var rulesButton: Button
-lateinit var pleaseWait : FrameLayout
-lateinit var player2Status : TextView
-lateinit var  player1Name : TextView
+    var currentDeck = arrayListOf<Card>() // available cards
+    lateinit var pullCard: Button
+    lateinit var pulledCardp1: TextView
+    lateinit var pulledCardp2: TextView
+    lateinit var rulesButton: Button
+    lateinit var pleaseWait: FrameLayout
+    lateinit var player2Status: TextView
+    lateinit var player1Name: TextView
+    lateinit var bothPlayersCardsInMain: ArrayList<Int> // arrayList of 8 ints, each for every suit
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -47,82 +48,51 @@ lateinit var  player1Name : TextView
         }
 
         pullCard = findViewById<Button>(R.id.pullCard)
-         pulledCardp1 = findViewById<TextView>(R.id.pulledCardp1)
-         pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
+        pulledCardp1 = findViewById<TextView>(R.id.pulledCardp1)
+        pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
         pleaseWait = findViewById<FrameLayout>(R.id.pleaseWait)
         rulesButton = findViewById<Button>(R.id.rulesButton)
-         player2Status = findViewById<TextView>(R.id.player2Status)
-      player1Name = findViewById<TextView>(R.id.Player1Name)// get name before creating
+        player2Status = findViewById<TextView>(R.id.player2Status)
+        player1Name = findViewById<TextView>(R.id.Player1Name)// get name before creating
 
 
         nameGetter { name ->
             realPlayer.name = name
             player1Name.text = name///functional
         }
-//        fun initializeGame() {
-//            decksCreate(currentDeck)
-//            realPlayer.bothPlayersCards()
-//
-//
-//            pullCard.setOnClickListener {
-//                realPlayer.pullCard(
-//                    player2Status,
-//                    currentDeck,
-//                    pulledCardp1,
-//                    pulledCardp2,
-//                    pullCard,
-//                    pleaseWait
-//                )
-//
-//            }
-//            rulesButton.setOnClickListener {  //functional
-//                if (rulesButton.text == "Rules") {
-//                    showRules(rulesButton, pullCard) //disable button under
-//                } else {
-//                    hideRules(rulesButton, pullCard)
-//                }
-//            }
-//
-//            nameGetter { name ->
-//                realPlayer.name = name
-//                player1Name.text = name///functional
-//            }
-//
-//        }
+
+        initializeGame()
     }
-fun initializeGame() {
-    decksCreate(currentDeck)
-    realPlayer.bothPlayersCards()
 
+    fun initializeGame() {
+        decksCreate(currentDeck) // adds all cards in the game
+        bothPlayersCardsInMain = realPlayer.bothPlayersCardsFunction() // should be an array with eight zeros
+pulledCardp1.text =
+        "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: "+bothPlayersCardsInMain[1] +" \nHearts: "+bothPlayersCardsInMain[0]
+        pulledCardp2.text =
+            "Has ${bothPlayersCardsInMain[7] + bothPlayersCardsInMain[6] + bothPlayersCardsInMain[5]+ bothPlayersCardsInMain[4]} card(s)"
+        pullCard.setOnClickListener {
+            realPlayer.pullCard(
+                player2Status,
+                currentDeck,
+                pulledCardp1,
+                pulledCardp2,
+                pullCard,
+                pleaseWait
+            )
 
-    pullCard.setOnClickListener {
-        realPlayer.pullCard(
-            player2Status,
-            currentDeck,
-            pulledCardp1,
-            pulledCardp2,
-            pullCard,
-            pleaseWait
-        )
-
-    }
-    rulesButton.setOnClickListener {  //functional
-        if (rulesButton.text == "Rules") {
-            showRules(rulesButton, pullCard) //disable button under
-        } else {
-            hideRules(rulesButton, pullCard)
         }
+        rulesButton.setOnClickListener {  //functional
+            if (rulesButton.text == "Rules") {
+                showRules(rulesButton, pullCard) //disable button under
+            } else {
+                hideRules(rulesButton, pullCard)
+            }
+        }
+
+
     }
 
-//    nameGetter { name ->
-//        realPlayer.name = name
-//        player1Name.text = name///functional
-//    }
-}
-    fun everythingToZero() {
-        decksCreate(currentDeck)
-        realPlayer.bothPlayersCards()
-    }
 
     fun nameGetter(callback: (String) -> Unit) {
         val builder = AlertDialog.Builder(this)

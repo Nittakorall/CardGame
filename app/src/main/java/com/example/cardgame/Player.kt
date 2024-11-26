@@ -16,9 +16,10 @@ class Player(val mainActivity: MainActivity,
 ) {
 
     var firstPlayerTurn: Boolean = true
+var bothPlayersCardsArray = bothPlayersCardsFunction()
 
-    val bothPlayersCards = arrayListOf<Int>()
-    fun bothPlayersCards() {
+    fun bothPlayersCardsFunction() : ArrayList<Int> {// how does it get info??
+        val bothPlayersCards = arrayListOf<Int>()
         var cardsOfHeartsP1: Int = 0 //0
         var cardsOfDiamondsP1: Int = 0//1
         var cardsOfSpadesP1: Int = 0//2
@@ -36,6 +37,7 @@ class Player(val mainActivity: MainActivity,
         bothPlayersCards.add(cardsOfSpadesP2)
         bothPlayersCards.add(cardsOfClubsP2)
 Log.d("SOUT", bothPlayersCards.toString())
+        return bothPlayersCards // returns array with all 0
     }
     fun pullCard(
         player2Status: TextView,
@@ -77,25 +79,25 @@ Log.d("SOUT", bothPlayersCards.toString())
 
         builder.setPositiveButton("Yes") { dialog, which ->
             if (currentDeck[i].suit == "hearts") {
-                bothPlayersCards[0]++
+                bothPlayersCardsArray[0]++
             }
             if (currentDeck[i].suit == "diamonds") {
-                bothPlayersCards[1]++
+                bothPlayersCardsArray[1]++
             }
             if (currentDeck[i].suit == "spades") {
-                bothPlayersCards[2]++
+                bothPlayersCardsArray[2]++
             }
             if (currentDeck[i].suit == "clubs") {
-                bothPlayersCards[3]++
+                bothPlayersCardsArray[3]++
             }
-            Log.d("))))", bothPlayersCards.toString())
-            mainActivity.checkWin(currentDeck, bothPlayersCards)
+            Log.d("))))", bothPlayersCardsArray.toString())
+            mainActivity.checkWin(currentDeck, bothPlayersCardsArray)
             pulledCardp1.text =
-                "Clubs: " + bothPlayersCards[3] + " ,\nSpades: " + bothPlayersCards[2] + ",\nDiamonds: "+bothPlayersCards[1] +" \nHearts: "+bothPlayersCards[0]
+                "Clubs: " + bothPlayersCardsArray[3] + " ,\nSpades: " + bothPlayersCardsArray[2] + ",\nDiamonds: "+bothPlayersCardsArray[1] +" \nHearts: "+bothPlayersCardsArray[0]
 
             Log.d(
                 "!!!!",
-                "Clubs: $bothPlayersCards[7], Spades: $bothPlayersCards[6],Diamonds: $bothPlayersCards[5],Hearts:  $bothPlayersCards[4]"
+                "Clubs: $bothPlayersCardsArray[7], Spades: $bothPlayersCardsArray[6],Diamonds: $bothPlayersCardsArray[5],Hearts:  $bothPlayersCardsArray[4]"
             )
                 .toString()
 
@@ -165,31 +167,31 @@ Log.d("SOUT", bothPlayersCards.toString())
 
         currentDeck.remove(currentDeck[i])
         if (currentDeck[i].suit == "hearts") {
-            bothPlayersCards[4]++
+            bothPlayersCardsArray[4]++
         }
         if (currentDeck[i].suit == "diamonds") {
-            bothPlayersCards[5]++
+            bothPlayersCardsArray[5]++
         }
         if (currentDeck[i].suit == "spades") {
-            bothPlayersCards[6]++
+            bothPlayersCardsArray[6]++
         }
         if (currentDeck[i].suit == "clubs") {
-            bothPlayersCards[7]++
+            bothPlayersCardsArray[7]++
         }
         firstPlayerTurn = true
         pulledCardp1.text =
-            "Clubs: " + bothPlayersCards[3] + " ,\nSpades: " + bothPlayersCards[2] + ",\nDiamonds: "+bothPlayersCards[1] +" \nHearts: "+bothPlayersCards[0]
+            "Clubs: " + bothPlayersCardsArray[3] + " ,\nSpades: " + bothPlayersCardsArray[2] + ",\nDiamonds: "+bothPlayersCardsArray[1] +" \nHearts: "+bothPlayersCardsArray[0]
         Log.d(
             "!!!!",
-            "Clubs: $bothPlayersCards[7], Spades: $bothPlayersCards[6],Diamonds: $bothPlayersCards[5],Hearts:  $bothPlayersCards[4]"
+            "Clubs: $bothPlayersCardsArray[7], Spades: $bothPlayersCardsArray[6],Diamonds: $bothPlayersCardsArray[5],Hearts:  $bothPlayersCardsArray[4]"
         )
             .toString()
 
         //   Snackbar.make(pleaseWait, "Computer is done thinking!", Snackbar.LENGTH_SHORT).show()
 
         pulledCardp2.text =
-            "Has ${bothPlayersCards[7] + bothPlayersCards[6] + bothPlayersCards[5]+ bothPlayersCards[4]} card(s)"
-        mainActivity.checkWin(currentDeck, bothPlayersCards)
+            "Has ${bothPlayersCardsArray[7] + bothPlayersCardsArray[6] + bothPlayersCardsArray[5]+ bothPlayersCardsArray[4]} card(s)"
+        mainActivity.checkWin(currentDeck, bothPlayersCardsArray)
 
     }
 }
