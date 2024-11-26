@@ -11,14 +11,15 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 
 
-class Player(val mainActivity: MainActivity,
-             val myContext: Context, var name: String, val winTimes: Int, val lostTimes: Int
+class Player(
+    val mainActivity: MainActivity,
+    val myContext: Context, var name: String, val winTimes: Int, val lostTimes: Int
 ) {
 
     var firstPlayerTurn: Boolean = true
-var bothPlayersCardsArray = bothPlayersCardsFunction()
+    var bothPlayersCardsArray = bothPlayersCardsFunction()
 
-    fun bothPlayersCardsFunction() : ArrayList<Int> {// how does it get info??
+    fun bothPlayersCardsFunction(): ArrayList<Int> {// how does it get info??
         val bothPlayersCards = arrayListOf<Int>()
         var cardsOfHeartsP1: Int = 0 //0
         var cardsOfDiamondsP1: Int = 0//1
@@ -36,17 +37,18 @@ var bothPlayersCardsArray = bothPlayersCardsFunction()
         bothPlayersCards.add(cardsOfDiamondsP2)
         bothPlayersCards.add(cardsOfSpadesP2)
         bothPlayersCards.add(cardsOfClubsP2)
-Log.d("SOUT", bothPlayersCards.toString())
+
         return bothPlayersCards // returns array with all 0
     }
+
     fun pullCard(
         player2Status: TextView,
         currentDeck: ArrayList<Card>,
         pulledCardp1: TextView,
         pulledCardp2: TextView,
         pullCard: Button,
-        pleaseWait: FrameLayout
-
+        pleaseWait: FrameLayout,
+        bothPlayersCardsInMain : ArrayList<Int>
     ) {
 
         var i = (0..<currentDeck.size).random()
@@ -59,7 +61,7 @@ Log.d("SOUT", bothPlayersCards.toString())
                 pulledCardp2,
                 i,
                 pullCard,
-                pleaseWait
+                pleaseWait, bothPlayersCardsInMain
             )
         }
     }
@@ -70,7 +72,8 @@ Log.d("SOUT", bothPlayersCards.toString())
         pulledCardp1: TextView,
         pulledCardp2: TextView,
         i: Int, pullCard: Button,
-        pleaseWait: FrameLayout
+        pleaseWait: FrameLayout,
+        bothPlayersCardsInMain : ArrayList<Int>
     ) {
 
         val builder = AlertDialog.Builder(myContext)
@@ -79,27 +82,22 @@ Log.d("SOUT", bothPlayersCards.toString())
 
         builder.setPositiveButton("Yes") { dialog, which ->
             if (currentDeck[i].suit == "hearts") {
-                bothPlayersCardsArray[0]++
+                bothPlayersCardsInMain[0]++
             }
             if (currentDeck[i].suit == "diamonds") {
-                bothPlayersCardsArray[1]++
+                bothPlayersCardsInMain[1]++
             }
             if (currentDeck[i].suit == "spades") {
-                bothPlayersCardsArray[2]++
+                bothPlayersCardsInMain[2]++
             }
             if (currentDeck[i].suit == "clubs") {
-                bothPlayersCardsArray[3]++
+                bothPlayersCardsInMain[3]++
             }
-            Log.d("))))", bothPlayersCardsArray.toString())
-            mainActivity.checkWin(currentDeck, bothPlayersCardsArray)
+            Log.d("))))", bothPlayersCardsInMain.toString())
+            mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
             pulledCardp1.text =
-                "Clubs: " + bothPlayersCardsArray[3] + " ,\nSpades: " + bothPlayersCardsArray[2] + ",\nDiamonds: "+bothPlayersCardsArray[1] +" \nHearts: "+bothPlayersCardsArray[0]
+                "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]
 
-            Log.d(
-                "!!!!",
-                "Clubs: $bothPlayersCardsArray[7], Spades: $bothPlayersCardsArray[6],Diamonds: $bothPlayersCardsArray[5],Hearts:  $bothPlayersCardsArray[4]"
-            )
-                .toString()
 
             val builder = AlertDialog.Builder(myContext)
             builder.setTitle("You got ${currentDeck[i].suit}  ${currentDeck[i].numberOfCard}")
@@ -111,7 +109,7 @@ Log.d("SOUT", bothPlayersCards.toString())
                     pulledCardp1,
                     pulledCardp2,
                     i,
-                    pullCard, pleaseWait
+                    pullCard, pleaseWait, bothPlayersCardsInMain
                 )
             }
 
@@ -128,7 +126,7 @@ Log.d("SOUT", bothPlayersCards.toString())
                 pulledCardp2,
                 i,
                 pullCard,
-                pleaseWait
+                pleaseWait, bothPlayersCardsInMain
             )
         }
         val dialog = builder.create()
@@ -141,18 +139,14 @@ Log.d("SOUT", bothPlayersCards.toString())
         pulledCardp1: TextView,
         pulledCardp2: TextView,
         i: Int, pullCard: Button,
-        pleaseWait: FrameLayout
+        pleaseWait: FrameLayout,  bothPlayersCardsInMain : ArrayList<Int>
     ) {
         // val player2Status = findViewById<TextView>(R.id.player2Status)
         pullCard.isEnabled = false
         player2Status.text = "Thinking..."
         val snackbar = Snackbar.make(pleaseWait, "Computer is thinking!", Snackbar.LENGTH_SHORT)
 
-        //app keeps crashing with code below
-//        val snackbarView = snackbar.view
-//        val params = snackbarView.layoutParams as CoordinatorLayout.LayoutParams
-//        params.gravity = Gravity.CENTER
-//        snackbarView.layoutParams = params
+
         snackbar.show()
         Handler(Looper.getMainLooper()).postDelayed({
             player2Status.text = "Waiting for you"
@@ -167,31 +161,25 @@ Log.d("SOUT", bothPlayersCards.toString())
 
         currentDeck.remove(currentDeck[i])
         if (currentDeck[i].suit == "hearts") {
-            bothPlayersCardsArray[4]++
+            bothPlayersCardsInMain[4]++
         }
         if (currentDeck[i].suit == "diamonds") {
-            bothPlayersCardsArray[5]++
+            bothPlayersCardsInMain[5]++
         }
         if (currentDeck[i].suit == "spades") {
-            bothPlayersCardsArray[6]++
+            bothPlayersCardsInMain[6]++
         }
         if (currentDeck[i].suit == "clubs") {
-            bothPlayersCardsArray[7]++
+            bothPlayersCardsInMain[7]++
         }
         firstPlayerTurn = true
         pulledCardp1.text =
-            "Clubs: " + bothPlayersCardsArray[3] + " ,\nSpades: " + bothPlayersCardsArray[2] + ",\nDiamonds: "+bothPlayersCardsArray[1] +" \nHearts: "+bothPlayersCardsArray[0]
-        Log.d(
-            "!!!!",
-            "Clubs: $bothPlayersCardsArray[7], Spades: $bothPlayersCardsArray[6],Diamonds: $bothPlayersCardsArray[5],Hearts:  $bothPlayersCardsArray[4]"
-        )
-            .toString()
+            "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsArray[0]
 
-        //   Snackbar.make(pleaseWait, "Computer is done thinking!", Snackbar.LENGTH_SHORT).show()
 
         pulledCardp2.text =
-            "Has ${bothPlayersCardsArray[7] + bothPlayersCardsArray[6] + bothPlayersCardsArray[5]+ bothPlayersCardsArray[4]} card(s)"
-        mainActivity.checkWin(currentDeck, bothPlayersCardsArray)
+            "Has ${bothPlayersCardsInMain[7] + bothPlayersCardsInMain[6] + bothPlayersCardsInMain[5] + bothPlayersCardsInMain[4]} card(s)"
+        mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
 
     }
 }

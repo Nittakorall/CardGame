@@ -67,7 +67,8 @@ class MainActivity : AppCompatActivity() {
     fun initializeGame() {
         decksCreate(currentDeck) // adds all cards in the game
         bothPlayersCardsInMain = realPlayer.bothPlayersCardsFunction() // should be an array with eight zeros
-pulledCardp1.text =
+Log.d("SOUT!", bothPlayersCardsInMain.toString())
+        pulledCardp1.text =
         "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: "+bothPlayersCardsInMain[1] +" \nHearts: "+bothPlayersCardsInMain[0]
         pulledCardp2.text =
             "Has ${bothPlayersCardsInMain[7] + bothPlayersCardsInMain[6] + bothPlayersCardsInMain[5]+ bothPlayersCardsInMain[4]} card(s)"
@@ -78,7 +79,7 @@ pulledCardp1.text =
                 pulledCardp1,
                 pulledCardp2,
                 pullCard,
-                pleaseWait
+                pleaseWait, bothPlayersCardsInMain
             )
 
         }
@@ -128,7 +129,7 @@ pulledCardp1.text =
     }
 
 
-    //need main method that starts other methods when playing one more time and put in in onResume()29:16
+
 
 
     fun decksCreate(currentDeck: ArrayList<Card>): ArrayList<Card> {
@@ -223,9 +224,8 @@ pulledCardp1.text =
 
 
     fun checkWin(
-        // should start another activity
         currentDeck: ArrayList<Card>,
-        bothPlayersCards: ArrayList<Int>
+        bothPlayersCardsInMain: ArrayList<Int>
 
     ) {
         var i: Int
@@ -236,14 +236,14 @@ pulledCardp1.text =
             intent.putExtra("whoWin", i)
             startActivity(intent)
         }
-        if (bothPlayersCards[3] == 3 || bothPlayersCards[0] == 3 || bothPlayersCards[2] == 3 || bothPlayersCards[1] == 3) {
+        if (bothPlayersCardsInMain[3] == 3 || bothPlayersCardsInMain[0] == 3 || bothPlayersCardsInMain[2] == 3 || bothPlayersCardsInMain[1] == 3) {
 
             i = 1
             var intent = Intent(this, WinningActivity::class.java)
             intent.putExtra("whoWin", i)
             startActivity(intent)
         }
-        if (bothPlayersCards[7] == 3 || bothPlayersCards[4] == 3 || bothPlayersCards[6] == 3 || bothPlayersCards[5] == 3) {
+        if (bothPlayersCardsInMain[7] == 3 || bothPlayersCardsInMain[4] == 3 || bothPlayersCardsInMain[6] == 3 || bothPlayersCardsInMain[5] == 3) {
 
             i = 2
             var intent = Intent(this, WinningActivity::class.java)
@@ -255,6 +255,7 @@ pulledCardp1.text =
 
     override fun onResume() {
         super.onResume()
+        Log.d("SOUT)", "Henlo")
         initializeGame()
     }
 }
