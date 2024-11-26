@@ -23,7 +23,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
-
+//var computerPlayer = Player(this, this, "Computer", 0,0)
     var realPlayer = Player(this, this, "Player1", 0, 0)
     var currentDeck = arrayListOf<Card>() // available cards
     lateinit var pullCard: Button
@@ -130,8 +130,6 @@ Log.d("SOUT!", bothPlayersCardsInMain.toString())
 
 
 
-
-
     fun decksCreate(currentDeck: ArrayList<Card>): ArrayList<Card> {
 
         val hearts1 = Card("hearts", "1", 1)
@@ -225,7 +223,7 @@ Log.d("SOUT!", bothPlayersCardsInMain.toString())
 
     fun checkWin(
         currentDeck: ArrayList<Card>,
-        bothPlayersCardsInMain: ArrayList<Int>
+        bothPlayersCardsInMain: ArrayList<Int>,
 
     ) {
         var i: Int

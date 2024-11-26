@@ -93,11 +93,10 @@ class Player(
             if (currentDeck[i].suit == "clubs") {
                 bothPlayersCardsInMain[3]++
             }
-            Log.d("))))", bothPlayersCardsInMain.toString())
             mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
             pulledCardp1.text =
                 "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]
-
+           // cardsLeft.text = "Cards left: " + currentDeck.size
 
             val builder = AlertDialog.Builder(myContext)
             builder.setTitle("You got ${currentDeck[i].suit}  ${currentDeck[i].numberOfCard}")
@@ -110,6 +109,7 @@ class Player(
                     pulledCardp2,
                     i,
                     pullCard, pleaseWait, bothPlayersCardsInMain
+
                 )
             }
 
@@ -139,9 +139,10 @@ class Player(
         pulledCardp1: TextView,
         pulledCardp2: TextView,
         i: Int, pullCard: Button,
-        pleaseWait: FrameLayout,  bothPlayersCardsInMain : ArrayList<Int>
+        pleaseWait: FrameLayout,  bothPlayersCardsInMain : ArrayList<Int>,
+
     ) {
-        // val player2Status = findViewById<TextView>(R.id.player2Status)
+
         pullCard.isEnabled = false
         player2Status.text = "Thinking..."
         val snackbar = Snackbar.make(pleaseWait, "Computer is thinking!", Snackbar.LENGTH_SHORT)
@@ -154,8 +155,6 @@ class Player(
             pullCard.isEnabled = true
 
         }, 1000)
-
-
 
 
 
@@ -180,6 +179,6 @@ class Player(
         pulledCardp2.text =
             "Has ${bothPlayersCardsInMain[7] + bothPlayersCardsInMain[6] + bothPlayersCardsInMain[5] + bothPlayersCardsInMain[4]} card(s)"
         mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
-
+        //cardsLeft.text = "Cards left: " + currentDeck.size
     }
 }
