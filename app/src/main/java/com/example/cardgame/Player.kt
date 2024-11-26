@@ -48,7 +48,7 @@ class Player(
         pulledCardp2: TextView,
         pullCard: Button,
         pleaseWait: FrameLayout,
-        bothPlayersCardsInMain : ArrayList<Int>
+        bothPlayersCardsInMain: ArrayList<Int>
     ) {
 
         var i = (0..<currentDeck.size).random()
@@ -73,7 +73,7 @@ class Player(
         pulledCardp2: TextView,
         i: Int, pullCard: Button,
         pleaseWait: FrameLayout,
-        bothPlayersCardsInMain : ArrayList<Int>
+        bothPlayersCardsInMain: ArrayList<Int>
     ) {
 
         val builder = AlertDialog.Builder(myContext)
@@ -93,15 +93,16 @@ class Player(
             if (currentDeck[i].suit == "clubs") {
                 bothPlayersCardsInMain[3]++
             }
-            mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
-            pulledCardp1.text =
-                "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]
-           // cardsLeft.text = "Cards left: " + currentDeck.size
+
 
             val builder = AlertDialog.Builder(myContext)
             builder.setTitle("You got ${currentDeck[i].suit}  ${currentDeck[i].numberOfCard}")
 
             builder.setPositiveButton("Nice") { dialog, which ->
+                mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
+                pulledCardp1.text =
+                    "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]//shows 0 hearts
+              //  TODO("mistake"), shows 0 hearts, and checkwin is bit weird
                 player2PullCard(
                     player2Status,
                     currentDeck,
@@ -139,7 +140,8 @@ class Player(
         pulledCardp1: TextView,
         pulledCardp2: TextView,
         i: Int, pullCard: Button,
-        pleaseWait: FrameLayout,  bothPlayersCardsInMain : ArrayList<Int>,
+
+        pleaseWait: FrameLayout, bothPlayersCardsInMain: ArrayList<Int>
 
     ) {
 
@@ -173,7 +175,7 @@ class Player(
         }
         firstPlayerTurn = true
         pulledCardp1.text =
-            "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsArray[0]
+            "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]
 
 
         pulledCardp2.text =
