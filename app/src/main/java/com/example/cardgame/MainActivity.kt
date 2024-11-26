@@ -23,16 +23,17 @@ import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
-
+//var computerPlayer = Player(this, this, "Computer", 0,0)
     var realPlayer = Player(this, this, "Player1", 0, 0)
-    var currentDeck = arrayListOf<Card>()
-lateinit var pullCard: Button
-lateinit var pulledCardp1 : TextView
-lateinit var  pulledCardp2 : TextView
-lateinit var rulesButton: Button
-lateinit var pleaseWait : FrameLayout
-lateinit var player2Status : TextView
-lateinit var  player1Name : TextView
+    var currentDeck = arrayListOf<Card>() // available cards
+    lateinit var pullCard: Button
+    lateinit var pulledCardp1: TextView
+    lateinit var pulledCardp2: TextView
+    lateinit var rulesButton: Button
+    lateinit var pleaseWait: FrameLayout
+    lateinit var player2Status: TextView
+    lateinit var player1Name: TextView
+    lateinit var bothPlayersCardsInMain: ArrayList<Int> // arrayList of 8 ints, each for every suit
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -47,82 +48,52 @@ lateinit var  player1Name : TextView
         }
 
         pullCard = findViewById<Button>(R.id.pullCard)
-         pulledCardp1 = findViewById<TextView>(R.id.pulledCardp1)
-         pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
+        pulledCardp1 = findViewById<TextView>(R.id.pulledCardp1)
+        pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
         pleaseWait = findViewById<FrameLayout>(R.id.pleaseWait)
         rulesButton = findViewById<Button>(R.id.rulesButton)
-         player2Status = findViewById<TextView>(R.id.player2Status)
-      player1Name = findViewById<TextView>(R.id.Player1Name)// get name before creating
+        player2Status = findViewById<TextView>(R.id.player2Status)
+        player1Name = findViewById<TextView>(R.id.Player1Name)// get name before creating
 
 
         nameGetter { name ->
             realPlayer.name = name
             player1Name.text = name///functional
         }
-//        fun initializeGame() {
-//            decksCreate(currentDeck)
-//            realPlayer.bothPlayersCards()
-//
-//
-//            pullCard.setOnClickListener {
-//                realPlayer.pullCard(
-//                    player2Status,
-//                    currentDeck,
-//                    pulledCardp1,
-//                    pulledCardp2,
-//                    pullCard,
-//                    pleaseWait
-//                )
-//
-//            }
-//            rulesButton.setOnClickListener {  //functional
-//                if (rulesButton.text == "Rules") {
-//                    showRules(rulesButton, pullCard) //disable button under
-//                } else {
-//                    hideRules(rulesButton, pullCard)
-//                }
-//            }
-//
-//            nameGetter { name ->
-//                realPlayer.name = name
-//                player1Name.text = name///functional
-//            }
-//
-//        }
+
+        initializeGame()
     }
-fun initializeGame() {
-    decksCreate(currentDeck)
-    realPlayer.bothPlayersCards()
 
+    fun initializeGame() {
+        decksCreate(currentDeck) // adds all cards in the game
+        bothPlayersCardsInMain = realPlayer.bothPlayersCardsFunction() // should be an array with eight zeros
+Log.d("SOUT!", bothPlayersCardsInMain.toString())
+        pulledCardp1.text =
+        "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: "+bothPlayersCardsInMain[1] +" \nHearts: "+bothPlayersCardsInMain[0]
+        pulledCardp2.text =
+            "Has ${bothPlayersCardsInMain[7] + bothPlayersCardsInMain[6] + bothPlayersCardsInMain[5]+ bothPlayersCardsInMain[4]} card(s)"
+        pullCard.setOnClickListener {
+            realPlayer.pullCard(
+                player2Status,
+                currentDeck,
+                pulledCardp1,
+                pulledCardp2,
+                pullCard,
+                pleaseWait, bothPlayersCardsInMain
+            )
 
-    pullCard.setOnClickListener {
-        realPlayer.pullCard(
-            player2Status,
-            currentDeck,
-            pulledCardp1,
-            pulledCardp2,
-            pullCard,
-            pleaseWait
-        )
-
-    }
-    rulesButton.setOnClickListener {  //functional
-        if (rulesButton.text == "Rules") {
-            showRules(rulesButton, pullCard) //disable button under
-        } else {
-            hideRules(rulesButton, pullCard)
         }
+        rulesButton.setOnClickListener {  //functional
+            if (rulesButton.text == "Rules") {
+                showRules(rulesButton, pullCard) //disable button under
+            } else {
+                hideRules(rulesButton, pullCard)
+            }
+        }
+
+
     }
 
-//    nameGetter { name ->
-//        realPlayer.name = name
-//        player1Name.text = name///functional
-//    }
-}
-    fun everythingToZero() {
-        decksCreate(currentDeck)
-        realPlayer.bothPlayersCards()
-    }
 
     fun nameGetter(callback: (String) -> Unit) {
         val builder = AlertDialog.Builder(this)
@@ -157,8 +128,6 @@ fun initializeGame() {
         }
     }
 
-
-    //need main method that starts other methods when playing one more time and put in in onResume()29:16
 
 
     fun decksCreate(currentDeck: ArrayList<Card>): ArrayList<Card> {
@@ -253,9 +222,8 @@ fun initializeGame() {
 
 
     fun checkWin(
-        // should start another activity
         currentDeck: ArrayList<Card>,
-        bothPlayersCards: ArrayList<Int>
+        bothPlayersCardsInMain: ArrayList<Int>,
 
     ) {
         var i: Int
@@ -266,14 +234,14 @@ fun initializeGame() {
             intent.putExtra("whoWin", i)
             startActivity(intent)
         }
-        if (bothPlayersCards[3] == 3 || bothPlayersCards[0] == 3 || bothPlayersCards[2] == 3 || bothPlayersCards[1] == 3) {
+        if (bothPlayersCardsInMain[3] == 3 || bothPlayersCardsInMain[0] == 3 || bothPlayersCardsInMain[2] == 3 || bothPlayersCardsInMain[1] == 3) {
 
             i = 1
             var intent = Intent(this, WinningActivity::class.java)
             intent.putExtra("whoWin", i)
             startActivity(intent)
         }
-        if (bothPlayersCards[7] == 3 || bothPlayersCards[4] == 3 || bothPlayersCards[6] == 3 || bothPlayersCards[5] == 3) {
+        if (bothPlayersCardsInMain[7] == 3 || bothPlayersCardsInMain[4] == 3 || bothPlayersCardsInMain[6] == 3 || bothPlayersCardsInMain[5] == 3) {
 
             i = 2
             var intent = Intent(this, WinningActivity::class.java)
@@ -285,6 +253,7 @@ fun initializeGame() {
 
     override fun onResume() {
         super.onResume()
+        Log.d("SOUT)", "Henlo")
         initializeGame()
     }
 }
