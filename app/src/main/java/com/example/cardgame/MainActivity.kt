@@ -24,12 +24,19 @@ import com.google.android.material.snackbar.Snackbar
 class MainActivity : AppCompatActivity() {
 
 
-//    var firstPlayerTurn: Boolean = true
-//    var computerPlayer = Player(this, this, "Computer", 0, 0)
-
-    //   var realPlayer = Player(this, this, "Player1", 0, 0)
+    var realPlayer = Player(this, this, "Player1", 0, 0)
+    var currentDeck = arrayListOf<Card>()
+lateinit var pullCard: Button
+lateinit var pulledCardp1 : TextView
+lateinit var  pulledCardp2 : TextView
+lateinit var rulesButton: Button
+lateinit var pleaseWait : FrameLayout
+lateinit var player2Status : TextView
+lateinit var  player1Name : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
@@ -39,46 +46,83 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val pullCard = findViewById<Button>(R.id.pullCard)
-        var pulledCardp1 = findViewById<TextView>(R.id.pulledCardp1)
-        var pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
-        val pleaseWait = findViewById<FrameLayout>(R.id.pleaseWait)
-        val rulesButton = findViewById<Button>(R.id.rulesButton)
-        val player2Status = findViewById<TextView>(R.id.player2Status)
-        val player1Name = findViewById<TextView>(R.id.Player1Name)// get name before creating
+        pullCard = findViewById<Button>(R.id.pullCard)
+         pulledCardp1 = findViewById<TextView>(R.id.pulledCardp1)
+         pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
+        pleaseWait = findViewById<FrameLayout>(R.id.pleaseWait)
+        rulesButton = findViewById<Button>(R.id.rulesButton)
+         player2Status = findViewById<TextView>(R.id.player2Status)
+      player1Name = findViewById<TextView>(R.id.Player1Name)// get name before creating
 
-        var realPlayer = Player(this, this, "Player1", 0, 0)
-        var currentDeck = arrayListOf<Card>()
-        decksCreate(currentDeck)
-        realPlayer.bothPlayersCards()
-
-
-        pullCard.setOnClickListener {
-            realPlayer.pullCard(
-                player2Status,
-                currentDeck,
-                pulledCardp1,
-                pulledCardp2,
-                pullCard,
-                pleaseWait
-            )
-
-        }
-        rulesButton.setOnClickListener {  //functional
-            if (rulesButton.text == "Rules") {
-                showRules(rulesButton, pullCard)
-            } else {
-                hideRules(rulesButton, pullCard)
-            }
-        }
 
         nameGetter { name ->
             realPlayer.name = name
             player1Name.text = name///functional
         }
+//        fun initializeGame() {
+//            decksCreate(currentDeck)
+//            realPlayer.bothPlayersCards()
+//
+//
+//            pullCard.setOnClickListener {
+//                realPlayer.pullCard(
+//                    player2Status,
+//                    currentDeck,
+//                    pulledCardp1,
+//                    pulledCardp2,
+//                    pullCard,
+//                    pleaseWait
+//                )
+//
+//            }
+//            rulesButton.setOnClickListener {  //functional
+//                if (rulesButton.text == "Rules") {
+//                    showRules(rulesButton, pullCard) //disable button under
+//                } else {
+//                    hideRules(rulesButton, pullCard)
+//                }
+//            }
+//
+//            nameGetter { name ->
+//                realPlayer.name = name
+//                player1Name.text = name///functional
+//            }
+//
+//        }
+    }
+fun initializeGame() {
+    decksCreate(currentDeck)
+    realPlayer.bothPlayersCards()
+
+
+    pullCard.setOnClickListener {
+        realPlayer.pullCard(
+            player2Status,
+            currentDeck,
+            pulledCardp1,
+            pulledCardp2,
+            pullCard,
+            pleaseWait
+        )
 
     }
+    rulesButton.setOnClickListener {  //functional
+        if (rulesButton.text == "Rules") {
+            showRules(rulesButton, pullCard) //disable button under
+        } else {
+            hideRules(rulesButton, pullCard)
+        }
+    }
 
+//    nameGetter { name ->
+//        realPlayer.name = name
+//        player1Name.text = name///functional
+//    }
+}
+    fun everythingToZero() {
+        decksCreate(currentDeck)
+        realPlayer.bothPlayersCards()
+    }
 
     fun nameGetter(callback: (String) -> Unit) {
         val builder = AlertDialog.Builder(this)
@@ -239,27 +283,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun createGame(
-        pullCard: Button,
-        player2Status: TextView,
-        realPlayer: Player,
-        pulledCardp1: TextView,
-        pulledCardp2: TextView,
-        pleaseWait: FrameLayout
-    ) { //set all cards back
-        var currentDeck = arrayListOf<Card>()
-        decksCreate(currentDeck)
-        realPlayer.bothPlayersCards()
-        pullCard.setOnClickListener {
-            realPlayer.pullCard(
-                player2Status,
-                currentDeck,
-                pulledCardp1,
-                pulledCardp2,
-                pullCard,
-                pleaseWait
-            )
-
-        }
+    override fun onResume() {
+        super.onResume()
+        initializeGame()
     }
 }
+
