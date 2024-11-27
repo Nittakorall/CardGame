@@ -23,7 +23,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
-//var computerPlayer = Player(this, this, "Computer", 0,0)
+    //var computerPlayer = Player(this, this, "Computer", 0,0)
     var realPlayer = Player(this, this, "Player1", 0, 0)
     var currentDeck = arrayListOf<Card>() // available cards
     lateinit var pullCard: Button
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var player2Status: TextView
     lateinit var player1Name: TextView
     lateinit var bothPlayersCardsInMain: ArrayList<Int> // arrayList of 8 ints, each for every suit
-    lateinit var startOver : Button
+    lateinit var startOver: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         rulesButton = findViewById<Button>(R.id.rulesButton)
         player2Status = findViewById<TextView>(R.id.player2Status)
         player1Name = findViewById<TextView>(R.id.Player1Name)// get name before creating
-startOver = findViewById(R.id.startOver)
+        startOver = findViewById(R.id.startOver)
 
         nameGetter { name ->
             realPlayer.name = name
@@ -67,12 +67,13 @@ startOver = findViewById(R.id.startOver)
 
     fun initializeGame() {
         decksCreate(currentDeck) // adds all cards in the game
-        bothPlayersCardsInMain = realPlayer.bothPlayersCardsFunction() // should be an array with eight zeros
-Log.d("SOUT!", bothPlayersCardsInMain.toString())
+        bothPlayersCardsInMain =
+            realPlayer.bothPlayersCardsFunction() // should be an array with eight zeros
+        Log.d("SOUT!", bothPlayersCardsInMain.toString())
         pulledCardp1.text =
-        "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: "+bothPlayersCardsInMain[1] +" \nHearts: "+bothPlayersCardsInMain[0]
+            "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]
         pulledCardp2.text =
-            "Has ${bothPlayersCardsInMain[7] + bothPlayersCardsInMain[6] + bothPlayersCardsInMain[5]+ bothPlayersCardsInMain[4]} card(s)"
+            "Has ${bothPlayersCardsInMain[7] + bothPlayersCardsInMain[6] + bothPlayersCardsInMain[5] + bothPlayersCardsInMain[4]} card(s)"
         pullCard.setOnClickListener {
             realPlayer.pullCard(
                 player2Status,
@@ -90,23 +91,24 @@ Log.d("SOUT!", bothPlayersCardsInMain.toString())
                 hideRules(rulesButton, pullCard)
             }
         }
-startOver.setOnClickListener {
-    startOver()
-}
+        startOver.setOnClickListener {
+            startOver()
+        }
     }
 
-fun startOver() {
-    val builder = AlertDialog.Builder(this)
-    builder.setTitle("Do you want to start over?")
-    builder.setPositiveButton("Yes") { dialog, _ ->
-        initializeGame()
-    }
-    builder.setNegativeButton("No") {dialog, _ ->
-       dialog.dismiss()
-    }
-    builder.show()
+    fun startOver() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Do you want to start over?")
+        builder.setPositiveButton("Yes") { dialog, _ ->
+            initializeGame()
+        }
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
 
-}
+    }
+
     fun nameGetter(callback: (String) -> Unit) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Hello there! What's your name?")
@@ -139,7 +141,6 @@ fun startOver() {
             rulesButton.text = "Rules"
         }
     }
-
 
 
     fun decksCreate(currentDeck: ArrayList<Card>): ArrayList<Card> {
@@ -237,7 +238,7 @@ fun startOver() {
         currentDeck: ArrayList<Card>,
         bothPlayersCardsInMain: ArrayList<Int>,
 
-    ) {
+        ) {
         var i: Int
         if (currentDeck.size == 0) {
             //sout "noone wins"
