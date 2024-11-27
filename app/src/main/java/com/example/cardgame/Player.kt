@@ -163,7 +163,7 @@ class Player(
 
         Log.d("SOUTRandom", takeOrSkip.toString())
         if (takeOrSkip == 1) {
-            currentDeck.remove(currentDeck[i])
+
             if (currentDeck[i].suit == "hearts") {
                 bothPlayersCardsInMain[4]++
             }
@@ -185,7 +185,8 @@ class Player(
 
         pulledCardp2.text =
             "Has ${bothPlayersCardsInMain[7] + bothPlayersCardsInMain[6] + bothPlayersCardsInMain[5] + bothPlayersCardsInMain[4]} card(s)"
+        currentDeck.remove(currentDeck[i])
         mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
-        //cardsLeft.text = "Cards left: " + currentDeck.size
+
     }
 }

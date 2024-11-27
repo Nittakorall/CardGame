@@ -42,9 +42,11 @@
         android:id="@+id/winnerView"
         android:layout_width="141dp"
         android:layout_height="141dp"
-        android:layout_marginTop="86dp"
+        android:layout_marginTop="84dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backButton"
-        tools:layout_editor_absoluteX="123dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
@@ -52,11 +54,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-
         android:background="@color/bluegray"
-
         android:text="Play Again"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
