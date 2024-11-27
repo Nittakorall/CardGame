@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var player2Status: TextView
     lateinit var player1Name: TextView
     lateinit var bothPlayersCardsInMain: ArrayList<Int> // arrayList of 8 ints, each for every suit
+    lateinit var startOver : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         rulesButton = findViewById<Button>(R.id.rulesButton)
         player2Status = findViewById<TextView>(R.id.player2Status)
         player1Name = findViewById<TextView>(R.id.Player1Name)// get name before creating
-
+startOver = findViewById(R.id.startOver)
 
         nameGetter { name ->
             realPlayer.name = name
@@ -89,10 +90,23 @@ Log.d("SOUT!", bothPlayersCardsInMain.toString())
                 hideRules(rulesButton, pullCard)
             }
         }
-
+startOver.setOnClickListener {
+    startOver()
+}
     }
 
+fun startOver() {
+    val builder = AlertDialog.Builder(this)
+    builder.setTitle("Do you want to start over?")
+    builder.setPositiveButton("Yes") { dialog, _ ->
+        initializeGame()
+    }
+    builder.setNegativeButton("No") {dialog, _ ->
+       dialog.dismiss()
+    }
+    builder.show()
 
+}
     fun nameGetter(callback: (String) -> Unit) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Hello there! What's your name?")

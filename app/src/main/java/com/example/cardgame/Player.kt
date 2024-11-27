@@ -102,7 +102,7 @@ class Player(
                 mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
                 pulledCardp1.text =
                     "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]//shows 0 hearts
-              //  TODO("mistake"), shows 0 hearts, and checkwin is bit weird
+                //  TODO("mistake"), shows 0 hearts, and checkwin is bit weird
                 player2PullCard(
                     player2Status,
                     currentDeck,
@@ -149,29 +149,34 @@ class Player(
         player2Status.text = "Thinking..."
         val snackbar = Snackbar.make(pleaseWait, "Computer is thinking!", Snackbar.LENGTH_SHORT)
 
-
+        val takeOrSkip: Int = (0..1).random()
         snackbar.show()
         Handler(Looper.getMainLooper()).postDelayed({
             player2Status.text = "Waiting for you"
-            Snackbar.make(pleaseWait, "Computer is done thinking!", Snackbar.LENGTH_SHORT).show()
+            if (takeOrSkip == 1) {
+            Snackbar.make(pleaseWait, "Computer pulled a card!", Snackbar.LENGTH_SHORT).show()}
+            else {    Snackbar.make(pleaseWait, "Computer skipped!", Snackbar.LENGTH_SHORT).show()}
             pullCard.isEnabled = true
 
         }, 1000)
 
 
+        Log.d("SOUTRandom", takeOrSkip.toString())
+        if (takeOrSkip == 1) {
+            currentDeck.remove(currentDeck[i])
+            if (currentDeck[i].suit == "hearts") {
+                bothPlayersCardsInMain[4]++
+            }
+            if (currentDeck[i].suit == "diamonds") {
+                bothPlayersCardsInMain[5]++
+            }
+            if (currentDeck[i].suit == "spades") {
+                bothPlayersCardsInMain[6]++
+            }
+            if (currentDeck[i].suit == "clubs") {
+                bothPlayersCardsInMain[7]++
+            }
 
-        currentDeck.remove(currentDeck[i])
-        if (currentDeck[i].suit == "hearts") {
-            bothPlayersCardsInMain[4]++
-        }
-        if (currentDeck[i].suit == "diamonds") {
-            bothPlayersCardsInMain[5]++
-        }
-        if (currentDeck[i].suit == "spades") {
-            bothPlayersCardsInMain[6]++
-        }
-        if (currentDeck[i].suit == "clubs") {
-            bothPlayersCardsInMain[7]++
         }
         firstPlayerTurn = true
         pulledCardp1.text =

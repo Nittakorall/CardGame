@@ -2,6 +2,7 @@ package com.example.cardgame
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 
 class WinningActivity : AppCompatActivity() {
     lateinit var resultView: TextView
-
+lateinit var winnerView : ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,6 +21,7 @@ class WinningActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        winnerView = findViewById(R.id.winnerView)
         resultView = findViewById(R.id.resultView)
         val backButton = findViewById<Button>(R.id.backButton)
         val whoWin = intent.getIntExtra("whoWin", 0)
@@ -27,10 +29,14 @@ class WinningActivity : AppCompatActivity() {
             resultView.text = "Noone wins this time"
         }
         if (whoWin == 1) {
-            resultView.text = "Player 1 wins!!!"
+            resultView.text = "You win!!!"
+            resultView.setBackgroundResource(R.drawable.cat1)
+
         }
         if (whoWin == 2) {
+
             resultView.text = "Player 2 wins!!!"
+            resultView.setBackgroundResource(R.drawable.cat)
         }
         backButton.setOnClickListener {
             finish() // goes back to existing activity
