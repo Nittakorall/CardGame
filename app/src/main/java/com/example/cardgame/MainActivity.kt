@@ -91,7 +91,6 @@ Log.d("SOUT!", bothPlayersCardsInMain.toString())
             }
         }
 
-
     }
 
 
