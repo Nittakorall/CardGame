@@ -81,7 +81,6 @@ Log.d("SOUT!", bothPlayersCardsInMain.toString())
                 pullCard,
                 pleaseWait, bothPlayersCardsInMain
             )
-
         }
         rulesButton.setOnClickListener {  //functional
             if (rulesButton.text == "Rules") {
