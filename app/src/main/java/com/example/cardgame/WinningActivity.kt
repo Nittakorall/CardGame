@@ -27,16 +27,17 @@ lateinit var winnerView : ImageView
         val whoWin = intent.getIntExtra("whoWin", 0)
         if (whoWin == 0) {
             resultView.text = "Noone wins this time"
+            winnerView.setBackgroundResource(R.drawable.cat1)
         }
         if (whoWin == 1) {
             resultView.text = "You win!!!"
-            resultView.setBackgroundResource(R.drawable.cat1)
+            winnerView.setBackgroundResource(R.drawable.cat1)
 
         }
         if (whoWin == 2) {
 
             resultView.text = "Player 2 wins!!!"
-            resultView.setBackgroundResource(R.drawable.cat)
+            winnerView.setBackgroundResource(R.drawable.cat)
         }
         backButton.setOnClickListener {
             finish() // goes back to existing activity

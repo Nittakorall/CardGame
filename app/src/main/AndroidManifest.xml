@@ -16,9 +16,6 @@
             android:name=".WinningActivity"
             android:exported="false" />
         <activity
-            android:name=".PlayersCardsActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
