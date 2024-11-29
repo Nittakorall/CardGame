@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RulesFragment">
+    tools:context=".RulesFragment"
+    android:background="@drawable/fragment_border">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -13,13 +14,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/fragment_border">
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="413dp"
             android:layout_height="734dp"
-            android:background="@color/bluegray"
+
             android:text="lakdrjgladkjlvkdjvlksndlbkadnlfkvns
 dlbksnb
 adlfbkn
