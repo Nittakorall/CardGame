@@ -39,6 +39,7 @@ lateinit var winnerView : ImageView
             resultView.text = "Player 2 wins!!!"
             winnerView.setBackgroundResource(R.drawable.cat)
         }
+
         backButton.setOnClickListener {
             finish() // goes back to existing activity
         }
