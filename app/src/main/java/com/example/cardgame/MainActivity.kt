@@ -251,7 +251,7 @@ class MainActivity : AppCompatActivity() {
         ) {
         var i: Int
         if (currentDeck.size == 0) {
-            //sout "noone wins"
+
             var intent = Intent(this, WinningActivity::class.java)
             i = 0
             intent.putExtra("whoWin", i)

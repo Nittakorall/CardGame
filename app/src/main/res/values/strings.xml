@@ -5,9 +5,9 @@
 
        <string name="rules">
            <![CDATA[
-           Detta är rad 1.\n
-           Detta är rad 2.\n
-           Detta är rad 3.
+\n          1. Press the card to make a move.\n
+          2. You can either pull a car or skip.\n
+          3. First to get 3 cards of             the same suit wins.
            ]]>
        </string>
 
