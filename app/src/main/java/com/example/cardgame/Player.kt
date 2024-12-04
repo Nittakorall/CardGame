@@ -75,7 +75,7 @@ class Player(
         pleaseWait: FrameLayout,
         bothPlayersCardsInMain: ArrayList<Int>
     ) {
-
+        mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)//checks if player2 won last time
         val builder = AlertDialog.Builder(myContext)
         builder.setTitle("Time to pull a card?")
         builder.setMessage("Rank of the card is ${currentDeck[i].numberOfCard} ")
@@ -93,7 +93,6 @@ class Player(
             if (currentDeck[i].suit == "clubs") {
                 bothPlayersCardsInMain[3]++
             }
-
 
             val builder = AlertDialog.Builder(myContext)
             builder.setTitle("You got ${currentDeck[i].suit}  ${currentDeck[i].numberOfCard}")
@@ -185,7 +184,7 @@ class Player(
         pulledCardp2.text =
             "Has ${bothPlayersCardsInMain[7] + bothPlayersCardsInMain[6] + bothPlayersCardsInMain[5] + bothPlayersCardsInMain[4]} card(s)"
         currentDeck.remove(currentDeck[i-1])
-        mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
+      //  mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
 
     }
 }

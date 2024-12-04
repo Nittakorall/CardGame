@@ -243,10 +243,9 @@ class MainActivity : AppCompatActivity() {
         return currentDeck
     }
 
-
     fun checkWin(
         currentDeck: ArrayList<Card>,
-        bothPlayersCardsInMain: ArrayList<Int>,
+        bothPlayersCardsInMain: ArrayList<Int>
 
         ) {
         var i: Int
