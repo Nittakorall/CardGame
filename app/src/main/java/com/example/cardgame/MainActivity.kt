@@ -57,11 +57,12 @@ class MainActivity : AppCompatActivity() {
         player1Name = findViewById<TextView>(R.id.Player1Name)// get name before creating
         startOver = findViewById(R.id.startOver)
 
-        nameGetter { name ->
-            realPlayer.name = name
-            player1Name.text = name///functional
-        }
+    nameGetter { name ->
+        realPlayer.name = name
+        player1Name.text = name///functional
 
+
+}
         initializeGame()
     }
 
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
     fun startOver() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Do you want to start over?")
+        builder.setTitle("Do you want to start a new game?")
         builder.setPositiveButton("Yes") { dialog, _ ->
             initializeGame()
         }
@@ -112,11 +113,20 @@ class MainActivity : AppCompatActivity() {
     fun nameGetter(callback: (String) -> Unit) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Hello there! What's your name?")
+        builder.setMessage("pls note, name can't be empty")
         val input = EditText(this)
         builder.setView(input)
         builder.setPositiveButton("There you go") { dialog, _ ->
             val name = input.text.toString()
-            callback(name)
+            if (name == "") {
+                nameGetter { name ->
+
+                    realPlayer.name = name
+                    player1Name.text = name
+                }
+            }
+            else {
+            callback(name)}
         }
         builder.show()
 

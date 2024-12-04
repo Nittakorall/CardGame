@@ -21,15 +21,6 @@
             android:id="@+id/textView2"
             android:layout_width="413dp"
             android:layout_height="734dp"
-
-            android:text="lakdrjgladkjlvkdjvlksndlbkadnlfkvns
-dlbksnb
-adlfbkn
-adlbns
-dlbkn
-adlrkbn
-slktblsbmlktmbskbtltkynbl
-ft"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
