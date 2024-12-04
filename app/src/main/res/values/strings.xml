@@ -5,9 +5,9 @@
 
        <string name="rules">
            <![CDATA[
-\n          1. Press the card to make a move.\n
-          2. You can either pull a car or skip.\n
-          3. First to get 3 cards of             the same suit wins.
+\n          1.Press the card to make a move.\n
+      \n    2.You can either pull a card or skip.\n
+        \n  3.First player to get 3 cards of the same suit wins.
            ]]>
        </string>
 

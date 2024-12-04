@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
             realPlayer.bothPlayersCardsFunction() // should be an array with eight zeros
         Log.d("SOUT!", bothPlayersCardsInMain.toString())
         pulledCardp1.text =
-            "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]
+            "Clubs: " + bothPlayersCardsInMain[3] + " \nSpades: " + bothPlayersCardsInMain[2] + "\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]
         pulledCardp2.text =
             "Has ${bothPlayersCardsInMain[7] + bothPlayersCardsInMain[6] + bothPlayersCardsInMain[5] + bothPlayersCardsInMain[4]} card(s)"
         pullCard.setOnClickListener {
