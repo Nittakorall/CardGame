@@ -22,7 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
-//TODO rules aren's shown correctly
+    //TODO rules aren's shown correctly
     //var computerPlayer = Player(this, this, "Computer", 0,0)
     var realPlayer = Player(this, this, "Player1", 0, 0)
     var currentDeck = arrayListOf<Card>() // available cards
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var player1Name: TextView
     lateinit var bothPlayersCardsInMain: ArrayList<Int> // arrayList of 8 ints, each for every suit
     lateinit var startOver: Button
-
+    lateinit var changeName: Button
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
@@ -56,13 +56,14 @@ class MainActivity : AppCompatActivity() {
         player2Status = findViewById<TextView>(R.id.player2Status)
         player1Name = findViewById<TextView>(R.id.Player1Name)// get name before creating
         startOver = findViewById(R.id.startOver)
+        changeName = findViewById(R.id.changeName)
 
-    nameGetter { name ->
-        realPlayer.name = name
-        player1Name.text = name///functional
+        nameGetter { name ->
+            realPlayer.name = name
+            player1Name.text = name///functional
 
 
-}
+        }
         initializeGame()
     }
 
@@ -95,6 +96,34 @@ class MainActivity : AppCompatActivity() {
         startOver.setOnClickListener {
             startOver()
         }
+        changeName.setOnClickListener {
+            Log.d("SOUT", "knapp")
+            changeNameDialog { name ->
+                realPlayer.name = name
+                player1Name.text = name
+
+            }
+        }
+    }
+
+    fun changeNameDialog(callback: (String) -> Unit) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("New name? Interesting")
+        builder.setMessage("Remember! Name can't be empty")
+        val input = EditText(this)
+        builder.setView(input)
+        builder.setPositiveButton("Submit") { dialog, _ ->
+            val name = input.text.toString()
+            if (name == "") {
+                changeNameDialog { name ->
+                    realPlayer.name = name
+                    player1Name.text = name
+                }
+            } else {
+                callback(name)
+            }
+        }
+        builder.show()
     }
 
     fun startOver() {
@@ -113,20 +142,19 @@ class MainActivity : AppCompatActivity() {
     fun nameGetter(callback: (String) -> Unit) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Hello there! What's your name?")
-        builder.setMessage("pls note, name can't be empty")
+        builder.setMessage("Please note, name can't be empty")
         val input = EditText(this)
         builder.setView(input)
         builder.setPositiveButton("There you go") { dialog, _ ->
             val name = input.text.toString()
             if (name == "") {
                 nameGetter { name ->
-
                     realPlayer.name = name
                     player1Name.text = name
                 }
+            } else {
+                callback(name)
             }
-            else {
-            callback(name)}
         }
         builder.show()
 
@@ -247,7 +275,7 @@ class MainActivity : AppCompatActivity() {
         currentDeck: ArrayList<Card>,
         bothPlayersCardsInMain: ArrayList<Int>
 
-        ) {
+    ) {
         var i: Int
         if (currentDeck.size == 0) {
 
@@ -255,15 +283,13 @@ class MainActivity : AppCompatActivity() {
             i = 0
             intent.putExtra("whoWin", i)
             startActivity(intent)
-        }
-       else if (bothPlayersCardsInMain[3] == 3 || bothPlayersCardsInMain[0] == 3 || bothPlayersCardsInMain[2] == 3 || bothPlayersCardsInMain[1] == 3) {
+        } else if (bothPlayersCardsInMain[3] == 3 || bothPlayersCardsInMain[0] == 3 || bothPlayersCardsInMain[2] == 3 || bothPlayersCardsInMain[1] == 3) {
 
             i = 1
             var intent = Intent(this, WinningActivity::class.java)
             intent.putExtra("whoWin", i)
             startActivity(intent)
-        }
-        else if (bothPlayersCardsInMain[7] == 3 || bothPlayersCardsInMain[4] == 3 || bothPlayersCardsInMain[6] == 3 || bothPlayersCardsInMain[5] == 3) {
+        } else if (bothPlayersCardsInMain[7] == 3 || bothPlayersCardsInMain[4] == 3 || bothPlayersCardsInMain[6] == 3 || bothPlayersCardsInMain[5] == 3) {
 
             i = 2
             var intent = Intent(this, WinningActivity::class.java)
