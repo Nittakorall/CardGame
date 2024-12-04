@@ -109,12 +109,12 @@ class MainActivity : AppCompatActivity() {
     fun changeNameDialog(callback: (String) -> Unit) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("New name? Interesting")
-        builder.setMessage("Remember! Name can't be empty")
+        builder.setMessage("Remember! Name can't be empty or exceed 15 symbols")
         val input = EditText(this)
         builder.setView(input)
         builder.setPositiveButton("Submit") { dialog, _ ->
             val name = input.text.toString()
-            if (name == "") {
+            if (name == ""||name.length>15) {
                 changeNameDialog { name ->
                     realPlayer.name = name
                     player1Name.text = name
@@ -142,12 +142,12 @@ class MainActivity : AppCompatActivity() {
     fun nameGetter(callback: (String) -> Unit) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Hello there! What's your name?")
-        builder.setMessage("Please note, name can't be empty")
+        builder.setMessage("Please note, name can't be empty or exceed 15 symbols")
         val input = EditText(this)
         builder.setView(input)
         builder.setPositiveButton("There you go") { dialog, _ ->
             val name = input.text.toString()
-            if (name == "") {
+            if (name == ""||name.length>15) {
                 nameGetter { name ->
                     realPlayer.name = name
                     player1Name.text = name
