@@ -99,10 +99,9 @@ class Player(
             builder.setTitle("You got ${currentDeck[i].suit}  ${currentDeck[i].numberOfCard}")
 
             builder.setPositiveButton("Nice") { dialog, which ->
-                mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
                 pulledCardp1.text =
                     "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]//shows 0 hearts
-                //  TODO("mistake"), shows 0 hearts, and checkwin is bit weird
+                mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
                 player2PullCard(
                     player2Status,
                     currentDeck,
