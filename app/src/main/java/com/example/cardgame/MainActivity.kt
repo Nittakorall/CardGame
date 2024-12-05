@@ -22,8 +22,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
-    //TODO rules aren's shown correctly
-    //var computerPlayer = Player(this, this, "Computer", 0,0)
+    //TODO rules aren's shown correctly!!!!
+
+
     var realPlayer = Player(this, this, "Player1", 0, 0)
     var currentDeck = arrayListOf<Card>() // available cards
     lateinit var pullCard: Button
@@ -88,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         }
         rulesButton.setOnClickListener {  //functional
             if (rulesButton.text == "Rules") {
-                showRules(rulesButton, pullCard) //disable button under
+                showRules(rulesButton, pullCard) //disables button under
             } else {
                 hideRules(rulesButton, pullCard)
             }

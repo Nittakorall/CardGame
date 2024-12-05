@@ -45,7 +45,6 @@ class RulesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Hämta TextView och sätt texten
         val rules: TextView = view.findViewById(R.id.textView2)
         rules.text = getString(R.string.rules)
     }

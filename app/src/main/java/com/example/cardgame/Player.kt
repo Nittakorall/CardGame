@@ -17,7 +17,6 @@ class Player(
 ) {
 
     var firstPlayerTurn: Boolean = true
-    var bothPlayersCardsArray = bothPlayersCardsFunction()
 
     fun bothPlayersCardsFunction(): ArrayList<Int> {// how does it get info??
         val bothPlayersCards = arrayListOf<Int>()
