@@ -95,11 +95,11 @@ class Player(
             }
 
             val builder = AlertDialog.Builder(myContext)
-            builder.setTitle("You got ${currentDeck[i].suit}  ${currentDeck[i].numberOfCard}")
+            builder.setTitle("You got ${currentDeck[i].suit} ${currentDeck[i].numberOfCard}")
 
             builder.setPositiveButton("Nice") { dialog, which ->
                 pulledCardp1.text =
-                    "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]//shows 0 hearts
+                    "Clubs: " + bothPlayersCardsInMain[3] + " \nSpades: " + bothPlayersCardsInMain[2] + "\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]//shows 0 hearts
                 mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
                 player2PullCard(
                     player2Status,
@@ -178,7 +178,7 @@ class Player(
         }
         firstPlayerTurn = true
         pulledCardp1.text =
-            "Clubs: " + bothPlayersCardsInMain[3] + " ,\nSpades: " + bothPlayersCardsInMain[2] + ",\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]
+            "Clubs: " + bothPlayersCardsInMain[3] + " \nSpades: " + bothPlayersCardsInMain[2] + "\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]
 
 
         pulledCardp2.text =
