@@ -22,8 +22,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
-    //TODO if real player is really fast and pulls a card right after computer wins an winning
-    //TODO activity starts, it will be shown 2 times. Guess some break/finish should be added somewhere
 
     var computerPlayer = Player(this, this, "Computer", 0, 0, false)
     var realPlayer = Player(this, this, "Player1", 0, 0, false)
