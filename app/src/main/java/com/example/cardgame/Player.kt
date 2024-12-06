@@ -13,12 +13,12 @@ import com.google.android.material.snackbar.Snackbar
 
 class Player(
     val mainActivity: MainActivity,
-    val myContext: Context, var name: String, val winTimes: Int, val lostTimes: Int
+    val myContext: Context, var name: String, val winTimes: Int, val lostTimes: Int, var win : Boolean
 ) {
 
     var firstPlayerTurn: Boolean = true
 
-    fun bothPlayersCardsFunction(): ArrayList<Int> {// how does it get info??
+    fun bothPlayersCardsFunction(): ArrayList<Int> {
         val bothPlayersCards = arrayListOf<Int>()
         var cardsOfHeartsP1: Int = 0 //0
         var cardsOfDiamondsP1: Int = 0//1
@@ -74,7 +74,7 @@ class Player(
         pleaseWait: FrameLayout,
         bothPlayersCardsInMain: ArrayList<Int>
     ) {
-        mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)//checks if player2 won last time
+       // mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)//checks if player2 won last time
         val builder = AlertDialog.Builder(myContext)
         builder.setTitle("Time to pull a card?")
         builder.setMessage("Rank of the card is ${currentDeck[i].numberOfCard} ")
@@ -151,8 +151,10 @@ class Player(
         Handler(Looper.getMainLooper()).postDelayed({
             player2Status.text = "Waiting for you"
             if (takeOrSkip == 1) {
-            Snackbar.make(pleaseWait, "Computer pulled a card!", Snackbar.LENGTH_SHORT).show()}
-            else {    Snackbar.make(pleaseWait, "Computer skipped!", Snackbar.LENGTH_SHORT).show()}
+                Snackbar.make(pleaseWait, "Computer pulled a card!", Snackbar.LENGTH_SHORT).show()
+            } else {
+                Snackbar.make(pleaseWait, "Computer skipped!", Snackbar.LENGTH_SHORT).show()
+            }
             pullCard.isEnabled = true
 
         }, 1000)
@@ -175,6 +177,7 @@ class Player(
             }
 
         }
+        mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
         firstPlayerTurn = true
         pulledCardp1.text =
             "Clubs: " + bothPlayersCardsInMain[3] + " \nSpades: " + bothPlayersCardsInMain[2] + "\nDiamonds: " + bothPlayersCardsInMain[1] + " \nHearts: " + bothPlayersCardsInMain[0]
@@ -182,8 +185,7 @@ class Player(
 
         pulledCardp2.text =
             "Has ${bothPlayersCardsInMain[7] + bothPlayersCardsInMain[6] + bothPlayersCardsInMain[5] + bothPlayersCardsInMain[4]} card(s)"
-        currentDeck.remove(currentDeck[i-1])
-      //  mainActivity.checkWin(currentDeck, bothPlayersCardsInMain)
+        currentDeck.remove(currentDeck[i - 1])
 
     }
 }

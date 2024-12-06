@@ -3,13 +3,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-       <string name="rules">
+    <string name="rules">
            <![CDATA[
 \n          1. Press the card to make a move.\n
       \n    2. You can either pull a card or skip.\n
         \n  3. First player to get 3 cards of the same suit wins.
-           \n\n\n\n
-4. Press Hide to continue the game]]>
+           \n\n\n\n\n\n\n\n
+4. Press Hide to continue the game.]]>
        </string>
 
 </resources>

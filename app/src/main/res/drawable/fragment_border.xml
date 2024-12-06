@@ -4,6 +4,6 @@
     <stroke
         android:width="2dp"
         android:color="@color/bluegray" /> <!-- Цвет рамки -->
-    <solid android:color="#B68D8EBC"/> <!-- Цвет фона -->
+    <solid android:color="#E18D8EBC"/> <!-- Цвет фона -->
     <corners android:radius="8dp"/> <!-- Радиус закругления углов -->
 </shape>

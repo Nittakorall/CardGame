@@ -22,10 +22,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
-    //TODO rules aren's shown correctly!!!!
+    //TODO if real player is really fast and pulls a card right after computer wins an winning
+    //TODO activity starts, it will be shown 2 times. Guess some break/finish should be added somewhere
 
-
-    var realPlayer = Player(this, this, "Player1", 0, 0)
+    var computerPlayer = Player(this, this, "Computer", 0, 0, false)
+    var realPlayer = Player(this, this, "Player1", 0, 0, false)
     var currentDeck = arrayListOf<Card>() // available cards
     lateinit var pullCard: Button
     lateinit var pulledCardp1: TextView
@@ -49,13 +50,14 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        pullCard = findViewById<Button>(R.id.pullCard)
+        pullCard =
+            findViewById<Button>(R.id.pullCard) //Things in <> are not needed as I already have lateinits
         pulledCardp1 = findViewById<TextView>(R.id.pulledCardp1)
         pulledCardp2 = findViewById<TextView>(R.id.pulledCardp2)
         pleaseWait = findViewById<FrameLayout>(R.id.pleaseWait)
         rulesButton = findViewById<Button>(R.id.rulesButton)
         player2Status = findViewById<TextView>(R.id.player2Status)
-        player1Name = findViewById<TextView>(R.id.Player1Name)// get name before creating
+        player1Name = findViewById<TextView>(R.id.Player1Name)
         startOver = findViewById(R.id.startOver)
         changeName = findViewById(R.id.changeName)
 
@@ -69,6 +71,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun initializeGame() {
+        realPlayer.win = false
+        computerPlayer.win = false
         decksCreate(currentDeck) // adds all cards in the game
         bothPlayersCardsInMain =
             realPlayer.bothPlayersCardsFunction() // should be an array with eight zeros
@@ -112,10 +116,11 @@ class MainActivity : AppCompatActivity() {
         builder.setTitle("New name? Interesting")
         builder.setMessage("Remember! Name can't be empty or exceed 15 symbols")
         val input = EditText(this)
+        input.setSingleLine(true)
         builder.setView(input)
         builder.setPositiveButton("Submit") { dialog, _ ->
             val name = input.text.toString()
-            if (name == ""||name.length>15) {
+            if (name == "" || name.length > 15) {
                 changeNameDialog { name ->
                     realPlayer.name = name
                     player1Name.text = name
@@ -145,10 +150,11 @@ class MainActivity : AppCompatActivity() {
         builder.setTitle("Hello there! What's your name?")
         builder.setMessage("Please note, name can't be empty or exceed 15 symbols")
         val input = EditText(this)
+        input.setSingleLine(true)
         builder.setView(input)
         builder.setPositiveButton("There you go") { dialog, _ ->
             val name = input.text.toString()
-            if (name == ""||name.length>15) {
+            if (name == "" || name.length > 15) {
                 nameGetter { name ->
                     realPlayer.name = name
                     player1Name.text = name
@@ -277,21 +283,25 @@ class MainActivity : AppCompatActivity() {
         bothPlayersCardsInMain: ArrayList<Int>
 
     ) {
+        if (realPlayer.win == true || computerPlayer.win == true) {
+            return
+        }
         var i: Int
         if (currentDeck.size == 0) {
-
+            realPlayer.win = true
+            computerPlayer.win = true
             var intent = Intent(this, WinningActivity::class.java)
             i = 0
             intent.putExtra("whoWin", i)
             startActivity(intent)
         } else if (bothPlayersCardsInMain[3] == 3 || bothPlayersCardsInMain[0] == 3 || bothPlayersCardsInMain[2] == 3 || bothPlayersCardsInMain[1] == 3) {
-
+            realPlayer.win = true
             i = 1
             var intent = Intent(this, WinningActivity::class.java)
             intent.putExtra("whoWin", i)
             startActivity(intent)
         } else if (bothPlayersCardsInMain[7] == 3 || bothPlayersCardsInMain[4] == 3 || bothPlayersCardsInMain[6] == 3 || bothPlayersCardsInMain[5] == 3) {
-
+            computerPlayer.win = true
             i = 2
             var intent = Intent(this, WinningActivity::class.java)
             intent.putExtra("whoWin", i)
